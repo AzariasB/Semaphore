@@ -1,0 +1,31 @@
+{
+  "name": "semaphore",
+  "version": "1.2.1",
+  "description": "Game to learn semaphore",
+  "keywords": [
+    "TypeScript",
+    "Webpack",
+    "Tutorials"
+  ],
+  "devDependencies": {
+    "expose-loader": "0.7.5",
+    "ts-loader": "4.4.2",
+    "webpack": "^4.19.0",
+    "webpack-cli": "3.0.8",
+    "webpack-dev-server": "^3.1.8"
+  },
+  "dependencies": {
+    "@tweenjs/tween.js": "^17.2.0",
+    "@types/tween.js": "^16.9.0",
+    "install": "^0.12.1",
+    "npm": "^6.4.1",
+    "typescript": "^3.0.3"
+  },
+  "scripts": {
+    "dev": "webpack --mode development && webpack-dev-server --mode development",
+    "build": "webpack --mode production && webpack-dev-server --mode production"
+  },
+  "author": {
+    "name": "AzariasB"
+  }
+}
