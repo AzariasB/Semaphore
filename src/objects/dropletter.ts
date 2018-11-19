@@ -1,5 +1,6 @@
 import { IDrawable } from './idrawable';
 import { Color } from '../utils/color';
+import { random, LETTER_MAX_DIST } from '../utils/constants';
 import * as TWEEN from '@tweenjs/tween.js';
 
 /**
@@ -9,14 +10,19 @@ import * as TWEEN from '@tweenjs/tween.js';
 export class DropLetter implements IDrawable {
 
     private yTween: TWEEN.Tween;
+    private xTween: TWEEN.Tween;
     private color: Color;
     private callbacks = [];
 
     constructor(private letter: string, private x: number, private y: number){
         this.yTween = new TWEEN.Tween(this)
-                            .to({y: y + 100}, 1001)
+                            .to({y: y + random(-LETTER_MAX_DIST, LETTER_MAX_DIST)}, 1001)
                             .easing(TWEEN.Easing.Quadratic.Out)
                             .onComplete(() => this.callbacks.map(c => c()))
+                            .start();
+        this.xTween = new TWEEN.Tween(this)
+                            .to({x: x + random(-LETTER_MAX_DIST, LETTER_MAX_DIST)}, 1001)
+                            .easing(TWEEN.Easing.Quadratic.Out)
                             .start();
         this.color = new Color(0, 0 ,0, 1);
         this.color.tween()

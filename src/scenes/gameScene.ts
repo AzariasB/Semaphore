@@ -14,19 +14,25 @@ export class GameScene extends Scene {
   private messenger: Messenger;
   private letter: Letter;
   private timer: Timer;
+  private correctAudio = new Audio('/assets/sounds/correct.ogg');
+  private wrongAudio = new Audio('/assets/sounds/wrong.mp3');
 
   constructor(game: Game) {
     super(game, "game");
-    this.messenger = new Messenger(this, 250, 350);
+    this.messenger = new Messenger(this, game.target.width / 2, 350);
     this.letter = new Letter(game.target.width / 2, 50);
     this.timer = new Timer(game.target.width - 10, game.target.height,  10, game.target.height, 5_000);
     this.timer.onFinish(() => {
-      console.log('finished !');
+      this.timerEnd();
     });
     this.switchLetter();
   }
 
   update(delta: number){
+  }
+
+  timerEnd(){
+
   }
 
   /**
@@ -61,7 +67,11 @@ export class GameScene extends Scene {
     if(this.letter.is(answer)) {
       this.letter.correct();
       this.switchLetter();
+      this.correctAudio.currentTime = 0;
+      this.correctAudio.play();
     } else {
+      this.wrongAudio.currentTime = 0;
+      this.wrongAudio.play();
       this.letter.wrong();
     }
   }

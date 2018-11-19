@@ -13,12 +13,12 @@ export class Ripple implements IDrawable {
     private sWidth = 20;
 
 
-    constructor(private x: number, private y: number, private radius: number = 5) {
+    constructor(private x: number, private y: number, private radius: number = 5, color: Color = new Color(0, 255, 0)) {
         this.radTween = new TWEEN.Tween(this)
                                 .to({radius: 100, sWidth: 0}, 1000)
                                 .easing(TWEEN.Easing.Quadratic.Out)
                                 .start();
-        this.color = new Color(0, 255, 0);
+        this.color = color;
         this.color.tween().to({a: 0}, 1000).easing(TWEEN.Easing.Exponential.In).start();
     }
     

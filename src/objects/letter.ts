@@ -34,6 +34,13 @@ export class Letter implements IDrawable {
     public hideLetter(){
     }
 
+    public tooLate(){
+        let rip = new Ripple(this.x, this.y, 5, new Color(255, 0, 0));
+        rip.onFinish(() => this.effects = this.effects.filter(x => x !== rip));
+        this.effects.push(rip);
+        this.wrong();
+    }
+
     /**
      * When the user guessed the correct letter
      * Shows the letter and adds some effects
@@ -41,10 +48,13 @@ export class Letter implements IDrawable {
     public correct(){
         let rip = new Ripple(this.x, this.y);
         rip.onFinish(() => this.effects = this.effects.filter(x => x !== rip));
-        let ltr = new DropLetter(this.currentLetter, this.x, this.y);
-        ltr.onFinish(() => this.effects.filter(x => x !== ltr));
         this.effects.push(rip);
-        this.effects.push(ltr);
+
+        for(let i = 0; i < 10; ++i){
+            let ltr = new DropLetter(this.currentLetter, this.x, this.y);
+            ltr.onFinish(() => this.effects.filter(x => x !== ltr));
+            this.effects.push(ltr);
+        }
     }
 
     /**
