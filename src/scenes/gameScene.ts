@@ -4,6 +4,13 @@ import { randomLetter } from '../utils/constants';
 import { Letter } from '../objects/letter';
 import { Game } from '../game';
 import { Timer } from '../objects/timer';
+import { Sound } from '../utils/soundEngine';
+
+
+enum GameState{
+  Normal,
+  Wrong
+}
 
 /**
  * Simple game scene, showing the
@@ -14,8 +21,7 @@ export class GameScene extends Scene {
   private messenger: Messenger;
   private letter: Letter;
   private timer: Timer;
-  private correctAudio = new Audio('/assets/sounds/correct.ogg');
-  private wrongAudio = new Audio('/assets/sounds/wrong.mp3');
+  private state: GameState = GameState.Normal;
 
   constructor(game: Game) {
     super(game, "game");
@@ -32,7 +38,7 @@ export class GameScene extends Scene {
   }
 
   timerEnd(){
-
+    this.letter.showLetter();
   }
 
   /**
@@ -54,6 +60,7 @@ export class GameScene extends Scene {
    */
   private switchLetter(){
     this.timer.start();
+    this.letter.hideLetter();
     let currentLetter = randomLetter();
     while(this.letter.is(currentLetter)) currentLetter = randomLetter();
     this.messenger.displayLetter(this.letter.currentLetter = currentLetter);
@@ -67,11 +74,9 @@ export class GameScene extends Scene {
     if(this.letter.is(answer)) {
       this.letter.correct();
       this.switchLetter();
-      this.correctAudio.currentTime = 0;
-      this.correctAudio.play();
+      this.game.se.play(Sound.Correct);
     } else {
-      this.wrongAudio.currentTime = 0;
-      this.wrongAudio.play();
+      this.game.se.play(Sound.Wrong);
       this.letter.wrong();
     }
   }

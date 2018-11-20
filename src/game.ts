@@ -1,15 +1,17 @@
 import { GameScene } from "./scenes/gameScene";
 import { MenuScene } from './scenes/menuScene';
+import { GameModeChoiceScene } from './scenes/gameModeChoiceScene';
 import { TransitionScene } from './scenes/transitionScene';
 import { GameConfig, CustomMouseEvent } from './config/gameConfig';
 import { StateMachine } from './utils/stateMachine';
+import { SoundEngine } from './utils/soundEngine';
 import * as TWEEN from '@tweenjs/tween.js';
 
 // main game configuration
 const config: GameConfig = {
   width: 800,
   height: 600,
-  scene: [GameScene, MenuScene, TransitionScene],
+  scene: [MenuScene, GameScene, GameModeChoiceScene, TransitionScene],
   backgroundColor: "#FFFFFF",
   parent: 'game'
 };
@@ -21,6 +23,7 @@ export class Game  {
   private ctx: CanvasRenderingContext2D;
   private lastUpdate = new Date();
   public sm: StateMachine;
+  public se: SoundEngine;
 
   constructor(private config: GameConfig) {
       this.target = document.createElement('canvas');
@@ -34,6 +37,7 @@ export class Game  {
       parent.appendChild(this.target);
 
       this.sm = new StateMachine(this, config.scene);
+      this.se = new SoundEngine();
   }
 
   public run() {
@@ -62,7 +66,9 @@ export class Game  {
 // when the page is loaded, create our game instance
 window.onload = () => {
   var game = new Game(config);
-  game.run();
+  game.se.load().then(success => {
+    game.run();
+  })
   window.addEventListener('keydown', ev => {
     game.handleKeyboardEvent(ev);
   });

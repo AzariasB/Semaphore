@@ -14,6 +14,7 @@ export class Letter implements IDrawable {
     private xTween: TWEEN.Tween = null;
     private xTranslate = 0;
     public currentLetter = '?';
+    private letterVisible = false;
     private currentColor = new Color(0, 0, 0);
     private effects: IDrawable[];
 
@@ -29,9 +30,14 @@ export class Letter implements IDrawable {
     }
 
     public showLetter(){
+        this.letterVisible = true;
+        let rip = new Ripple(this.x, this.y, 5, new Color(255, 0, 0));
+        rip.onFinish(() => this.effects = this.effects.filter(x => x !== rip));
+        this.effects.push(rip);
     }
 
     public hideLetter(){
+        this.letterVisible = false;
     }
 
     public tooLate(){
@@ -78,7 +84,7 @@ export class Letter implements IDrawable {
     draw(g: CanvasRenderingContext2D) {
         g.font = "40pt Connection";
         g.fillStyle = this.currentColor.toString();
-        g.fillText('?', this.x + Math.sin(this.xTranslate) * 5 - 10, this.y + 10);
+        g.fillText(this.letterVisible ? this.currentLetter : '?', this.x + Math.sin(this.xTranslate) * 5 - 10, this.y + 10);
 
         this.effects.map(x => x.draw(g));
     }

@@ -17,7 +17,7 @@ export class MenuScene extends Scene {
         super(game, "menu");
         const playButton = new Button(game.target.width / 2, 100, "Jouer");
         playButton.onClick(() => {
-            game.sm.changeScene('transition', this, 'game');
+            game.sm.changeScene('transition', this, 'gameModeChoice');
         });
         const trainButton = new Button(game.target.width / 2, 200, "Entraînement");
         const helpButton = new Button(game.target.width / 2, 300, "Aide");
