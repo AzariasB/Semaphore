@@ -5,12 +5,9 @@ import { Letter } from '../objects/letter';
 import { Game } from '../game';
 import { Timer } from '../objects/timer';
 import { Sound } from '../utils/soundEngine';
+import { Button } from '../objects/button';
 
 
-enum GameState{
-  Normal,
-  Wrong
-}
 
 /**
  * Simple game scene, showing the
@@ -21,16 +18,25 @@ export class GameScene extends Scene {
   private messenger: Messenger;
   private letter: Letter;
   private timer: Timer;
-  private state: GameState = GameState.Normal;
+  private menuBtn: Button;
 
   constructor(game: Game) {
     super(game, "game");
     this.messenger = new Messenger(this, game.target.width / 2, 350);
     this.letter = new Letter(game.target.width / 2, 50);
-    this.timer = new Timer(game.target.width - 10, game.target.height,  10, game.target.height, 5_000);
-    this.timer.onFinish(() => {
-      this.timerEnd();
-    });
+    this.menuBtn = new Button(100, 200, "< Menu", () => game.sm.changeScene('transition', this, 'menu'), 20);
+  }
+
+  init(...params: any[]){
+    const guessTime = params[0] || 10_000;
+    if(guessTime != Infinity){
+      this.timer = new Timer(this.game.target.width - 10, this.game.target.height,  10, this.game.target.height, guessTime);
+      this.timer.onFinish(() => {
+        this.timerEnd();
+      });
+    } else {
+      this.timer = new Timer(0,0,0,0,0);// 'Empty' timers
+    }
     this.switchLetter();
   }
 
@@ -51,7 +57,8 @@ export class GameScene extends Scene {
   draw(g: CanvasRenderingContext2D) {
     this.messenger.draw(g);
     this.letter.draw(g);
-    this.timer.draw(g);
+    this.menuBtn.draw(g);
+    if(this.timer) this.timer.draw(g);
   }
 
   /**
@@ -87,5 +94,11 @@ export class GameScene extends Scene {
     }
   }
 
-  handleMouseEvent(ev: MouseEvent, g: CanvasRenderingContext2D){}
+  handleMouseEvent(ev: MouseEvent, g: CanvasRenderingContext2D){
+    if(this.menuBtn.handleMouseClick(ev, g)){
+      this.game.target.style.cursor = 'pointer';
+    }else {
+      this.game.target.style.cursor = 'default';
+    }
+  }
 }

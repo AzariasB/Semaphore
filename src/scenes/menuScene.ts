@@ -40,6 +40,10 @@ export class MenuScene extends Scene {
     }
 
     handleMouseEvent(ev: CustomMouseEvent, g: CanvasRenderingContext2D){
-        this.drawables.map(m => m.handleMouseClick(ev, g));
+        if(this.drawables.some(m => m.handleMouseClick(ev, g))){
+            this.game.target.style.cursor = 'pointer';
+        } else {
+            this.game.target.style.cursor = 'default';
+        }
     }
 }

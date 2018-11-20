@@ -20,7 +20,8 @@ export class TransitionScene extends Scene {
         super(game, "transition");
     }
 
-    init(from: Scene, to){
+    init(from: Scene, to, ...params: any[]){
+        this.game.target.style.cursor = 'default';
         this.renderEntering = false;
         this.progressPercent = 0;
         this.exitingScene = from;
@@ -28,7 +29,7 @@ export class TransitionScene extends Scene {
         this.tween = new TWEEN.Tween(this)
                                 .to({progressPercent : 100}, 500)
                                 .easing(TWEEN.Easing.Quadratic.Out)
-                                .onComplete(() => this.openTransition())
+                                .onComplete(() => this.openTransition(params))
                                 .start();
     }
 
@@ -36,19 +37,19 @@ export class TransitionScene extends Scene {
      * Second phase of the transition,
      * opens up the clap and shows the new scene
      */
-    private openTransition(){
+    private openTransition(...params: any[]){
         this.renderEntering = true;
         TWEEN.remove(this.tween);
         this.tween = new TWEEN.Tween(this)
             .to({progressPercent : 0}, 500)
             .delay(100)
             .easing(TWEEN.Easing.Quadratic.In)
-            .onComplete(() => this.endTransition())
+            .onComplete(() => this.endTransition(params))
             .start();
     }
 
-    private endTransition() {
-        this.game.sm.changeScene(this.enteringScene.name);
+    private endTransition(...params: any[]) {
+        this.game.sm.changeScene(this.enteringScene.name, ...params);
     }
 
     draw(g: CanvasRenderingContext2D) {
@@ -69,8 +70,8 @@ export class TransitionScene extends Scene {
             rightY = h * prog,
             topX = w * invP;
 
-        drawShape(g, [[0,h], [0, leftY], [bottomX, h]], {color: 'yellow', mode: 'fill'});
-        drawShape(g, [[w, 0], [topX, 0], [w, rightY]], {color: 'red', mode: 'fill'});
+        drawShape(g, [[0,h], [0, leftY], [bottomX, h]], {color: 'red', mode: 'fill'});
+        drawShape(g, [[w, 0], [topX, 0], [w, rightY]], {color: 'yellow', mode: 'fill'});
 
         g.restore();
     }   

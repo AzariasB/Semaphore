@@ -2,6 +2,7 @@ import {  Scene } from '../config/scene';
 import { Button } from '../objects/button';
 import { CustomMouseEvent } from '../config/gameConfig';
 import { Game } from '../game';
+import { DIFFICULTY } from '../utils/constants';
 
 export class GameModeChoiceScene extends Scene {
 
@@ -9,18 +10,18 @@ export class GameModeChoiceScene extends Scene {
 
     constructor(game: Game){
         super(game, 'gameModeChoice');
-        const playButton = new Button(game.target.width / 2, 100, "Infini");
-        playButton.onClick(() => {
-            game.sm.changeScene('transition', this, 'game');
-        });
-        const trainButton = new Button(game.target.width / 2, 200, "Facile");
-        const helpButton = new Button(game.target.width / 2, 300, "Moyen");
-        const aboutButton = new Button(game.target.width / 2, 400, "Difficile");
-        const backButton = new Button(game.target.width / 2, 500, "Menu");
-        backButton.onClick(() => {
-            game.sm.changeScene('transition', this, 'menu');
-        });
-        this.drawables.push(playButton, helpButton, trainButton, aboutButton, backButton);
+        this.drawables.push(new Button(game.target.width / 2, 100, "Infini", () => this.goWithTime(Infinity)),
+            new Button(game.target.width / 2, 200, "Facile", () => this.goWithTime(DIFFICULTY.EASY)),
+            new Button(game.target.width / 2, 300, "Moyen", () => this.goWithTime(DIFFICULTY.MEDIUM)),
+            new Button(game.target.width / 2, 400, "Difficile", () => this.goWithTime(DIFFICULTY.HARD)),
+            new Button(game.target.width / 2, 500, "< Menu",() => {
+                game.sm.changeScene('transition', this, 'menu');
+            })
+        );
+    }
+
+    private goWithTime(time: number){
+        this.game.sm.changeScene('transition', this, 'game', time);
     }
 
     public draw(g: CanvasRenderingContext2D) {
@@ -28,7 +29,11 @@ export class GameModeChoiceScene extends Scene {
     }
 
     handleMouseEvent(ev: CustomMouseEvent, g: CanvasRenderingContext2D){
-        this.drawables.map(m => m.handleMouseClick(ev, g));
+        if(this.drawables.some(m => m.handleMouseClick(ev, g))){
+            this.game.target.style.cursor = 'pointer';
+        } else {
+            this.game.target.style.cursor = 'default';
+        }
     }
 
 }

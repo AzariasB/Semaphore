@@ -14,7 +14,7 @@ export class Button implements IDrawable {
      * Height of the button, is always
      * the same, no matter the button
      */
-    public static readonly HEIGHT = 70;
+    public static readonly MAX_HEIGHT = 70;
 
     /**
      * width of the button, is calculated
@@ -48,12 +48,14 @@ export class Button implements IDrawable {
     /**
      * shortcut for the height
      */
-    private readonly height = Button.HEIGHT;
+    private readonly height = Button.MAX_HEIGHT;
 
     constructor(private x: number,
                 private y: number,
-                private text: string){
-        
+                private text: string,
+                callback? : () => void,
+                private fontSize: number = 50){
+        if(callback)this.listeners.push(callback);
     }
 
     /**
@@ -85,10 +87,10 @@ export class Button implements IDrawable {
 
         g.save();
         g.beginPath();
-        g.rect(this.x, this.y, this.width, Button.HEIGHT);
+        g.rect(this.x, this.y, this.width, this.fontSize * 1.3);
         g.clip();
 
-        drawShape(g, [[this.x, this.y + Button.HEIGHT], [this.x, this.y + Button.HEIGHT - leftY], [this.x + bottomX, this.y + Button.HEIGHT]], {mode: 'fill', color: 'red'});
+        drawShape(g, [[this.x, this.y + this.height], [this.x, this.y + this.height - leftY], [this.x + bottomX, this.y + this.height]], {mode: 'fill', color: 'red'});
 
         g.restore();
     }
@@ -99,15 +101,15 @@ export class Button implements IDrawable {
     draw(g: CanvasRenderingContext2D) {
         g.save();
         g.translate(-this.width / 2, - this.height / 2);
-        g.font = `${this.height - 20}pt Connection`;
+        g.font = `${this.height - (this.height - this.fontSize)}pt Connection`;
         if (this.width === null) this.width = g.measureText(this.text).width + 20;
 
         g.fillStyle = 'yellow';
-        g.fillRect(this.x, this.y, this.width, this.height);
+        g.fillRect(this.x, this.y, this.width, this.fontSize * 1.3);
         this.drawHoverEffect(g);
 
         g.fillStyle = 'black';
-        g.fillText(this.text, this.x + 10, this.y + this.height - 10);
+        g.fillText(this.text, this.x + 10, this.y + this.height - (this.height - this.fontSize));
         g.restore();
     }
 
@@ -115,7 +117,10 @@ export class Button implements IDrawable {
      * Whether this button contains the given position
      */
     private contains(x: number, y: number){
-        return x > this.x - 10 - this.width / 2 && y > this.y - 10 - this.height / 2  && x < this.x + this.width / 2 && y < this.y + this.height / 2 + 10;
+        return x > this.x - 10 - this.width / 2 && 
+                x < this.x + this.width / 2 && 
+                y > this.y - 10 - this.height / 2  && 
+                y < this.y + this.height / 2 + 10;
     }
 
     /**
@@ -126,7 +131,7 @@ export class Button implements IDrawable {
      * @param ev 
      * @param g 
      */
-    handleMouseClick(ev: CustomMouseEvent, g: CanvasRenderingContext2D){
+    handleMouseClick(ev: CustomMouseEvent, g: CanvasRenderingContext2D): boolean{
         if(this.contains(ev.a, ev.b)) {
             if(ev.type === 'mousedown'){
                 this.listeners.map(l => l());
@@ -138,6 +143,7 @@ export class Button implements IDrawable {
                                         .easing(TWEEN.Easing.Quadratic.Out)
                                         .start();
             }
+            return true;
         } else if(this.state === 'hover'){
             this.state = 'none';
             this.clearTween();

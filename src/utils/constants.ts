@@ -1,7 +1,20 @@
-// Rendering constants
+/*
+----------------------
+Game design contsants
+----------------------
+*/
+export const DIFFICULTY = {
+    EASY: 20_000, // 20 seconds to guess a letter
+    MEDIUM: 10_000, // 10 seconds to guess a letter
+    HARD: 5_000// 5 seconds to guess a letter
+}
 
-//Max distance where a letter drop can go
-export const LETTER_MAX_DIST = 150;
+/*
+----------------------
+ Rendering constants
+ ----------------------
+*/
+export const LETTER_MAX_DIST = 150; //Max distance where a letter drop can go
 
 
 // All possible letters to be guessed
