@@ -8,8 +8,6 @@ import { Scene } from "../config/scene";
  * user found the correct letter
  */
 export class Ripple extends Drawable {
-    
-    private radTween: TWEEN.Tween;
     private color: Color;
     private sWidth = 20;
 
@@ -21,16 +19,13 @@ export class Ripple extends Drawable {
         private radius: number = 5,
         color: Color = new Color(0, 255, 0)) {
         super(scene);
-        this.radTween = new TWEEN.Tween(this)
-                                .to({radius: 100, sWidth: 0}, 1000)
-                                .easing(TWEEN.Easing.Quadratic.Out)
-                                .start();
+        new TWEEN.Tween(this)
+                        .to({radius: 100, sWidth: 0}, 1000)
+                        .easing(TWEEN.Easing.Quadratic.Out)
+                        .start()
+                        .onComplete(() => this.kill());
         this.color = color;
         this.color.tween().to({a: 0}, 1000).easing(TWEEN.Easing.Exponential.In).start();
-    }
-    
-    public onFinish(callback){
-        this.radTween.onComplete(callback);
     }
 
     public draw(g: CanvasRenderingContext2D) {

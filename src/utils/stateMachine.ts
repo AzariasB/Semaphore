@@ -8,7 +8,7 @@ import { CustomMouseEvent } from "../config/gameConfig";
  */
 export class StateMachine {
 
-    private _scenes: {[key: string] : Scene};
+    private _scenes: {[key: string] : {new(game: Game): Scene}};
     private _currentScene: Scene;
 
     /**
@@ -18,11 +18,11 @@ export class StateMachine {
         return this._currentScene;
     }
 
-    constructor(game: Game, scenes: (new(game: Game) => Scene)[]) {
+    constructor(private game: Game, scenes: {new(game: Game): Scene}[]) {
         this._scenes = {};
         scenes.forEach((constr, i) => {
             let  s = new constr(game);
-            this._scenes[s.name] = s;
+            this._scenes[s.name] = constr;
             if (i === 0) this._currentScene = s;
         });
     }
@@ -33,7 +33,7 @@ export class StateMachine {
      * @param sceneName name of the scene to find
      */
     public getScene(sceneName: string){
-        return this._scenes[sceneName] || null;
+        return new this._scenes[sceneName](this.game) || null;
     }
 
     /**
@@ -43,8 +43,13 @@ export class StateMachine {
     public changeScene(sceneName: string, ...params: any[]){
         if (!this._scenes[sceneName]) return;
 
-        this._currentScene = this._scenes[sceneName];
+        this._currentScene = new this._scenes[sceneName](this.game);
         this._currentScene.init(...params);
+    }
+
+    public setCurrentScene(nwScene: Scene, ...params: any[]){
+        nwScene.init(...params);
+        this._currentScene = nwScene;
     }
 
     /**

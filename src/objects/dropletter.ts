@@ -10,10 +10,7 @@ import { Scene } from '../config/scene';
  */
 export class DropLetter extends Drawable {
 
-    private yTween: TWEEN.Tween;
-    private xTween: TWEEN.Tween;
     private color: Color;
-    private callbacks = [];
 
     constructor(
         scene: Scene,
@@ -21,13 +18,12 @@ export class DropLetter extends Drawable {
         private x: number,
         private y: number){
         super(scene);
-        this.yTween = new TWEEN.Tween(this)
-                            .to({y: y + random(-LETTER_MAX_DIST, LETTER_MAX_DIST)}, 1001)
+        new TWEEN.Tween(this).to({y: y + random(-LETTER_MAX_DIST, LETTER_MAX_DIST)}, 1001)
                             .easing(TWEEN.Easing.Quadratic.Out)
-                            .onComplete(() => this.callbacks.map(c => c()))
+                            .onComplete(() => this.kill())
                             .start();
-        this.xTween = new TWEEN.Tween(this)
-                            .to({x: x + random(-LETTER_MAX_DIST, LETTER_MAX_DIST)}, 1001)
+        new TWEEN.Tween(this)
+                            .to({x: x + random(-LETTER_MAX_DIST, LETTER_MAX_DIST)}, 1000)
                             .easing(TWEEN.Easing.Quadratic.Out)
                             .start();
         this.color = new Color(0, 0 ,0, 1);
@@ -35,14 +31,6 @@ export class DropLetter extends Drawable {
                 .to({a: 0}, 1000)
                 .easing(TWEEN.Easing.Quintic.In)
                 .start();
-    }
-
-    /**
-     * 
-     * @param callback a method to call when the effect is finished
-     */
-    public onFinish(callback){
-        this.callbacks.push(callback);
     }
 
     /**

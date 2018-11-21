@@ -49,7 +49,7 @@ export class TransitionScene extends Scene {
     }
 
     private endTransition(...params: any[]) {
-        this.game.sm.changeScene(this.enteringScene.name, ...params);
+        this.game.sm.setCurrentScene(this.enteringScene, ...params);
     }
 
     draw(g: CanvasRenderingContext2D) {

@@ -17,7 +17,7 @@ export abstract class Scene {
     }
 
     public remove(drawable: Drawable){
-        delete this._objects[drawable.UUID];
+        this._objects.delete(drawable.UUID);
     }
 
     public add<T extends Drawable>(type: {new(...parmas: any[]): T}, ...params: any[]){
@@ -54,7 +54,7 @@ export abstract class Scene {
      * @param g the canvas context where to draw the game
      */
     public draw(g: CanvasRenderingContext2D){
-        Array.from(this._objects).reverse().map(x => x[1].draw(g));
+        this._objects.forEach(v => v.draw(g));
     }
 
     /**

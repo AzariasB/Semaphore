@@ -19,6 +19,7 @@ export abstract class Drawable {
 
     public kill() {
         this.scene.remove(this);
+        this.scene = null;
     }
 
     abstract draw(g: CanvasRenderingContext2D);
