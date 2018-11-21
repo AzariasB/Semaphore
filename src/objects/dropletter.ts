@@ -1,20 +1,26 @@
-import { IDrawable } from './idrawable';
+import { Drawable } from './drawable';
 import { Color } from '../utils/color';
 import { random, LETTER_MAX_DIST } from '../utils/constants';
 import * as TWEEN from '@tweenjs/tween.js';
+import { Scene } from '../config/scene';
 
 /**
  * simple effect of a letters dropping
  * (when the correct letter is found)
  */
-export class DropLetter implements IDrawable {
+export class DropLetter extends Drawable {
 
     private yTween: TWEEN.Tween;
     private xTween: TWEEN.Tween;
     private color: Color;
     private callbacks = [];
 
-    constructor(private letter: string, private x: number, private y: number){
+    constructor(
+        scene: Scene,
+        private letter: string,
+        private x: number,
+        private y: number){
+        super(scene);
         this.yTween = new TWEEN.Tween(this)
                             .to({y: y + random(-LETTER_MAX_DIST, LETTER_MAX_DIST)}, 1001)
                             .easing(TWEEN.Easing.Quadratic.Out)

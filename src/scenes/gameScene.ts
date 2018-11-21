@@ -19,23 +19,25 @@ export class GameScene extends Scene {
   private letter: Letter;
   private timer: Timer;
   private menuBtn: Button;
+  private score: number = 0;
 
   constructor(game: Game) {
     super(game, "game");
-    this.messenger = new Messenger(this, game.target.width / 2, 350);
-    this.letter = new Letter(game.target.width / 2, 50);
-    this.menuBtn = new Button(100, 200, "< Menu", () => game.sm.changeScene('transition', this, 'menu'), 20);
+    this.messenger = this.add(Messenger, game.target.width / 2, 350);
+    this.letter =  this.add(Letter, game.target.width / 2, 50);
+    this.menuBtn = this.add(Button, 40, 40, "< Menu", () => game.sm.changeScene('transition', this, 'menu'), 20);
   }
 
   init(...params: any[]){
+    this.score = 0;
     const guessTime = params[0] || 10_000;
     if(guessTime != Infinity){
-      this.timer = new Timer(this.game.target.width - 10, this.game.target.height,  10, this.game.target.height, guessTime);
+      this.timer = this.add(Timer, this.game.target.width - 10, this.game.target.height,  10, this.game.target.height, guessTime);
       this.timer.onFinish(() => {
         this.timerEnd();
       });
     } else {
-      this.timer = new Timer(0,0,0,0,0);// 'Empty' timers
+      this.timer =  this.add(Timer, 0,0,0,0,0);// 'Empty' timers
     }
     this.switchLetter();
   }
@@ -55,10 +57,7 @@ export class GameScene extends Scene {
    * @param g target
    */
   draw(g: CanvasRenderingContext2D) {
-    this.messenger.draw(g);
-    this.letter.draw(g);
-    this.menuBtn.draw(g);
-    if(this.timer) this.timer.draw(g);
+    super.draw(g);
   }
 
   /**
@@ -91,14 +90,6 @@ export class GameScene extends Scene {
   handleKeyboardEvent(ev: KeyboardEvent){
     if( /^[a-z]$/.test(ev.key)){
       this.checkAnswer(ev.key);
-    }
-  }
-
-  handleMouseEvent(ev: MouseEvent, g: CanvasRenderingContext2D){
-    if(this.menuBtn.handleMouseClick(ev, g)){
-      this.game.target.style.cursor = 'pointer';
-    }else {
-      this.game.target.style.cursor = 'default';
     }
   }
 }

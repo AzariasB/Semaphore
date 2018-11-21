@@ -1,6 +1,7 @@
-import { IDrawable } from './idrawable';
+import { Drawable } from './drawable';
 import { Color } from '../utils/color';
 import * as TWEEN from '@tweenjs/tween.js';
+import { Scene } from '../config/scene';
 
 /**
  * Timer/ Cooldwon effect
@@ -8,7 +9,7 @@ import * as TWEEN from '@tweenjs/tween.js';
  * Show the time remaining before the end of the guess
  * A trigger is called when the bottom of the timer is reached
  */
-export class Timer implements IDrawable {
+export class Timer extends Drawable {
 
     private color: Color;
     private height: number;
@@ -16,11 +17,13 @@ export class Timer implements IDrawable {
     private clrTween: TWEEN.Tween = null;
     private callbacks = [];
 
-    constructor(private x: number, 
+    constructor(scene: Scene,
+                private x: number, 
                 private y: number,
                 private width: number,
                 private readonly startHeight: number,
                 private readonly totalTime: number) {
+        super(scene);
         this.color = new Color(0, 255, 0);
         this.height = startHeight;
     }

@@ -1,5 +1,5 @@
 
-import { IDrawable } from './idrawable';
+import { Drawable } from './drawable';
 import { Scene } from '../config/scene';
 import { drawShape } from '../utils/rendering';
 import * as TWEEN from '@tweenjs/tween.js';
@@ -7,7 +7,7 @@ import * as TWEEN from '@tweenjs/tween.js';
 /**
  * A single flag, can have 7 differents positions
  */
-export class Flag implements IDrawable {
+export class Flag extends Drawable {
 
     /**
      * Wether the flag should be drawn
@@ -26,12 +26,13 @@ export class Flag implements IDrawable {
     private yTranslate = 0;
 
 
-    constructor(private scene: Scene, 
+    constructor(scene: Scene, 
                 public x: number,
                 public y: number,
                 public rotation: number,
                 private length:number = 150,
                 private flagSide: number = 50){
+            super(scene);
             this.yTween = new TWEEN.Tween(this)
                     .to({yTranslate: 5}, 1000)
                     .yoyo(true)

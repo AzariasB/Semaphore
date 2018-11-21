@@ -1,14 +1,15 @@
-import { IDrawable } from "./idrawable";
+import { Drawable } from "./drawable";
 import { CustomMouseEvent } from "../config/gameConfig";
 import * as TWEEN from '@tweenjs/tween.js';
 import { drawShape } from "../utils/rendering";
+import { Scene } from "../config/scene";
 
 /**
  * Button is a simple class, contains a text
  * and calls a list of functions 
  * Also has a hover animation
  */
-export class Button implements IDrawable {
+export class Button extends Drawable {
     
     /**
      * Height of the button, is always
@@ -50,11 +51,13 @@ export class Button implements IDrawable {
      */
     private readonly height = Button.MAX_HEIGHT;
 
-    constructor(private x: number,
+    constructor(scene: Scene,
+                private x: number,
                 private y: number,
                 private text: string,
                 callback? : () => void,
                 private fontSize: number = 50){
+        super(scene);
         if(callback)this.listeners.push(callback);
     }
 
@@ -117,10 +120,10 @@ export class Button implements IDrawable {
      * Whether this button contains the given position
      */
     private contains(x: number, y: number){
-        return x > this.x - 10 - this.width / 2 && 
+        return x > this.x - this.width / 2 && 
                 x < this.x + this.width / 2 && 
-                y > this.y - 10 - this.height / 2  && 
-                y < this.y + this.height / 2 + 10;
+                y > this.y - this.height / 2  && 
+                y < this.y - this.height / 2 + this.fontSize * 1.3;
     }
 
     /**

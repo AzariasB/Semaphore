@@ -1,16 +1,22 @@
-import { IDrawable } from './idrawable';
+import { Drawable } from './drawable';
 import * as TWEEN from '@tweenjs/tween.js';
+import { Scene } from '../config/scene';
 
 /**
  * A single eye of the 'messenger', can blink
  * at random times
  */
-export class Eye implements IDrawable {
+export class Eye extends Drawable {
 
     private radiusBlink: TWEEN.Tween;
     private canBlink = true;
 
-    constructor(private x: number, private y: number, private radius: number = 3) {
+    constructor(
+        scene: Scene,
+        private x: number,
+        private y: number,
+        private radius: number = 3) {
+        super(scene);
         this.renewBlink();
     }
 

@@ -1,4 +1,4 @@
-import { IDrawable } from "./idrawable";
+import { Drawable } from "./drawable";
 import { Scene } from "../config/scene";
 import { drawShape } from "../utils/rendering";
 import { Eye } from './eye';
@@ -8,22 +8,20 @@ import { Eye } from './eye';
  * Has two eyes, one head and one body,
  * has a floating effect
  */
-export class Holder implements IDrawable {
+export class Holder extends Drawable {
 
     /**
      * Radius of the head
      */
     private headRadius = 20;
 
-    // The two eyes
-    private eyes: Eye[] = [];
-
     constructor(scene: Scene,
                 private x: number,
                 private y: number,
                 private height: number = 60) {
-        this.eyes.push(new Eye(x - 9, y - height));
-        this.eyes.push(new Eye(x + 7, y - height));
+        super(scene);
+        this.scene.add<Eye>(Eye, x - 9, y - height);
+        this.scene.add<Eye>(Eye, x + 7, y - height);
     }
 
     public clear(g: CanvasRenderingContext2D){
@@ -35,7 +33,6 @@ export class Holder implements IDrawable {
      * @param g target
      */
     public draw(g: CanvasRenderingContext2D){
-
         // head
         g.fillStyle = '#111111';
         g.beginPath();
@@ -56,12 +53,6 @@ export class Holder implements IDrawable {
         // body outline
         drawShape(g, [[this.x, this.y - this.height + this.headRadius * 2], [this.x + 50, this.y + this.height * 2], [this.x - 50, this.y + this.height * 2]], {mode: 'stroke'});
     
-        //eyes
-        if( Math.random() > 0.995){
-            this.eyes.map(e => e.blink());
-        }
-
-        this.eyes.map(x => x.draw(g));
     }
 
 }

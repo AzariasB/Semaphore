@@ -8,21 +8,14 @@ import { Game } from '../game';
  */
 export class MenuScene extends Scene {
 
-    /**
-     * All the buttons to draw
-     */
-    private drawables: Button[] = [];
-
     constructor(game: Game) {
         super(game, "menu");
-        const playButton = new Button(game.target.width / 2, 100, "Jouer");
-        playButton.onClick(() => {
+        const playButton = this.add(Button, game.target.width / 2, 100, "Jouer", () => {
             game.sm.changeScene('transition', this, 'gameModeChoice');
         });
-        const trainButton = new Button(game.target.width / 2, 200, "Entraînement");
-        const helpButton = new Button(game.target.width / 2, 300, "Aide");
-        const aboutButton = new Button(game.target.width / 2, 400, "A propos");
-        this.drawables.push(playButton, helpButton, trainButton, aboutButton);
+        this.add(Button, game.target.width / 2, 200, "Entraînement");
+        this.add(Button, game.target.width / 2, 300, "Aide");
+        this.add(Button, game.target.width / 2, 400, "A propos");
     }
 
     update(delta: number){  
@@ -32,18 +25,10 @@ export class MenuScene extends Scene {
      * Draws all the button
      */
     draw(g: CanvasRenderingContext2D) {
-        this.drawables.map(d => d.draw(g));
+        super.draw(g);
     }
 
     handleKeyboardEvent(ev: KeyboardEvent) {
         
-    }
-
-    handleMouseEvent(ev: CustomMouseEvent, g: CanvasRenderingContext2D){
-        if(this.drawables.some(m => m.handleMouseClick(ev, g))){
-            this.game.target.style.cursor = 'pointer';
-        } else {
-            this.game.target.style.cursor = 'default';
-        }
     }
 }

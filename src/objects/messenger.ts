@@ -1,6 +1,6 @@
 import { Flag } from "./flag";
 import { Holder } from "./holder";
-import { IDrawable } from "./idrawable";
+import { Drawable } from "./drawable";
 import { getLetterRotations } from "../utils/angles";
 import { Scene } from "../config/scene";
 import * as TWEEN from '@tweenjs/tween.js';
@@ -9,9 +9,7 @@ import * as TWEEN from '@tweenjs/tween.js';
  * Main actor of the game, is the one with a holder
  * and two flags
  */
-export class Messenger implements IDrawable {
-
-    private drawables: IDrawable[];
+export class Messenger extends Drawable {
     private flag1: Flag;
     private flag2: Flag;
     private circleRadius = 50;
@@ -19,12 +17,13 @@ export class Messenger implements IDrawable {
     private yTranslate = 0;
 
 
-    constructor(scene: Scene, private x: number, private y: number) {
-        this.drawables = [];
-        const holder = new Holder(scene, x, y)
-        this.drawables.push(holder);
-        this.drawables.push(this.flag1 = new Flag(scene, x, y, null));
-        this.drawables.push(this.flag2 = new Flag(scene, x, y, null));
+    constructor(scene: Scene, 
+        private x: number, 
+        private y: number) {
+        super(scene);
+        this.scene.add(Holder, x, y);
+        this.flag1 = scene.add(Flag, x, y, null);
+        this.flag2 = scene.add(Flag, x, y, null);
         this.flag1.display = this.flag2.display = false;
         
         this.yTween = new TWEEN.Tween(this)
@@ -45,7 +44,6 @@ export class Messenger implements IDrawable {
         g.shadowColor = 'gray';
         g.shadowBlur = 20;
         g.translate(0, this.yTranslate);
-        this.drawables.map(x => x.draw(g));
         g.restore();
     }
 

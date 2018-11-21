@@ -1,19 +1,26 @@
-import { IDrawable } from "./idrawable";
+import { Drawable } from "./drawable";
 import * as TWEEN from '@tweenjs/tween.js';
 import { Color } from "../utils/color";
+import { Scene } from "../config/scene";
 
 /**
  * Simple ripple effect when the
  * user found the correct letter
  */
-export class Ripple implements IDrawable {
+export class Ripple extends Drawable {
     
     private radTween: TWEEN.Tween;
     private color: Color;
     private sWidth = 20;
 
 
-    constructor(private x: number, private y: number, private radius: number = 5, color: Color = new Color(0, 255, 0)) {
+    constructor(
+        scene: Scene,
+        private x: number,
+        private y: number,
+        private radius: number = 5,
+        color: Color = new Color(0, 255, 0)) {
+        super(scene);
         this.radTween = new TWEEN.Tween(this)
                                 .to({radius: 100, sWidth: 0}, 1000)
                                 .easing(TWEEN.Easing.Quadratic.Out)

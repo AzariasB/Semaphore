@@ -1,25 +1,28 @@
-import { IDrawable } from './idrawable';
+import { Drawable } from './drawable';
 import { Color } from '../utils/color';
 import * as TWEEN from '@tweenjs/tween.js';
 import { Ripple } from './ripple'; 
 import { DropLetter } from './dropletter';
+import { Scene } from '../config/scene';
 
 /**
  * Question mark displayed to ask the user
  * to press the key he thinks could be the one
  * shown
  */
-export class Letter implements IDrawable {
+export class Letter extends Drawable {
 
     private xTween: TWEEN.Tween = null;
     private xTranslate = 0;
     public currentLetter = '?';
     private letterVisible = false;
     private currentColor = new Color(0, 0, 0);
-    private effects: IDrawable[];
 
-    constructor(private x: number, private y: number){
-        this.effects = [];
+    constructor(
+        scene: Scene,
+        private x: number,
+        private y: number){
+        super(scene);
     }
 
     /**
@@ -31,9 +34,7 @@ export class Letter implements IDrawable {
 
     public showLetter(){
         this.letterVisible = true;
-        let rip = new Ripple(this.x, this.y, 5, new Color(255, 0, 0));
-        rip.onFinish(() => this.effects = this.effects.filter(x => x !== rip));
-        this.effects.push(rip);
+        this.scene.add(Ripple, this.x, this.y, 5, new Color(255, 0, 0));
     }
 
     public hideLetter(){
@@ -41,9 +42,7 @@ export class Letter implements IDrawable {
     }
 
     public tooLate(){
-        let rip = new Ripple(this.x, this.y, 5, new Color(255, 0, 0));
-        rip.onFinish(() => this.effects = this.effects.filter(x => x !== rip));
-        this.effects.push(rip);
+        this.scene.add(Ripple, this.x, this.y, 5, new Color(255, 0, 0));
         this.wrong();
     }
 
@@ -52,14 +51,10 @@ export class Letter implements IDrawable {
      * Shows the letter and adds some effects
      */
     public correct(){
-        let rip = new Ripple(this.x, this.y);
-        rip.onFinish(() => this.effects = this.effects.filter(x => x !== rip));
-        this.effects.push(rip);
+        this.scene.add(Ripple, this.x, this.y);
 
         for(let i = 0; i < 10; ++i){
-            let ltr = new DropLetter(this.currentLetter, this.x, this.y);
-            ltr.onFinish(() => this.effects.filter(x => x !== ltr));
-            this.effects.push(ltr);
+            this.scene.add(DropLetter, this.currentLetter, this.x, this.y);
         }
     }
 
@@ -85,8 +80,6 @@ export class Letter implements IDrawable {
         g.font = "40pt Connection";
         g.fillStyle = this.currentColor.toString();
         g.fillText(this.letterVisible ? this.currentLetter : '?', this.x + Math.sin(this.xTranslate) * 5 - 10, this.y + 10);
-
-        this.effects.map(x => x.draw(g));
     }
 
     /**

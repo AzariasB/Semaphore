@@ -53,6 +53,7 @@ export class TransitionScene extends Scene {
     }
 
     draw(g: CanvasRenderingContext2D) {
+        super.draw(g);
         g.save();
 
         if(this.renderEntering) {
