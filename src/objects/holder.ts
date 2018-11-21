@@ -13,15 +13,18 @@ export class Holder extends Drawable {
     /**
      * Radius of the head
      */
-    private headRadius = 20;
+    private readonly headRadius = 20;
+    private eyes: Eye[] = [];
 
     constructor(scene: Scene,
                 private x: number,
                 private y: number,
                 private height: number = 60) {
         super(scene);
-        this.scene.add<Eye>(Eye, x - 9, y - height);
-        this.scene.add<Eye>(Eye, x + 7, y - height);
+        this.eyes.push(
+            new Eye(scene, x - 9, y - height),
+            new Eye(scene, x + 7, y - height)
+        );
     }
 
     public clear(g: CanvasRenderingContext2D){
@@ -49,6 +52,8 @@ export class Holder extends Drawable {
         g.beginPath();
         g.arc(this.x, this.y - this.headRadius * 3, this.headRadius, 0, Math.PI * 2, true);
         g.stroke();
+
+        this.eyes.map(x => x.draw(g));
 
         // body outline
         drawShape(g, [[this.x, this.y - this.height + this.headRadius * 2], [this.x + 50, this.y + this.height * 2], [this.x - 50, this.y + this.height * 2]], {mode: 'stroke'});

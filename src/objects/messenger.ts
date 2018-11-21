@@ -15,15 +15,16 @@ export class Messenger extends Drawable {
     private circleRadius = 50;
     private yTween: TWEEN.Tween;
     private yTranslate = 0;
+    private holder: Holder;
 
 
     constructor(scene: Scene, 
         private x: number, 
         private y: number) {
         super(scene);
-        this.scene.add(Holder, x, y);
-        this.flag1 = scene.add(Flag, x, y, null);
-        this.flag2 = scene.add(Flag, x, y, null);
+        this.holder = new Holder(scene, x, y);
+        this.flag1 = new Flag(scene, x, y, null);
+        this.flag2 = new Flag(scene, x, y, null);
         this.flag1.display = this.flag2.display = false;
         
         this.yTween = new TWEEN.Tween(this)
@@ -44,6 +45,9 @@ export class Messenger extends Drawable {
         g.shadowColor = 'gray';
         g.shadowBlur = 20;
         g.translate(0, this.yTranslate);
+        this.holder.draw(g);
+        this.flag1.draw(g);
+        this.flag2.draw(g);
         g.restore();
     }
 
