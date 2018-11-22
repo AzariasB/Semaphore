@@ -7,17 +7,16 @@ import * as TWEEN from '@tweenjs/tween.js';
 export abstract class Scene {
 
     private _objects: Map<string, Drawable> = new Map();
-    protected tGroup: TWEEN.Group;
+    protected tGroup: TWEEN.Group  = new TWEEN.Group();
 
     public get buttons(): Button[] {
         return <Button[]>Array.from(this._objects).map(x => x[1]).filter(x => x instanceof Button);
     }
 
-    constructor(protected game: Game,public readonly name: string) {
-        this.tGroup = new TWEEN.Group();
+    constructor(protected game: Game, public readonly name: string) {
     }
 
-    public tween(obj: any = this): TWEEN.Tween{
+    public tween(obj: any = this): TWEEN.Tween {
         return new TWEEN.Tween(obj, this.tGroup);
     }
 
@@ -49,14 +48,6 @@ export abstract class Scene {
      */
     public update(delta: number) {
         this.tGroup.update();
-    }
-
-    /**
-     * 
-     * @param params when entering the state
-     */
-    public enter(...params: object[]) {
-        
     }
 
     /**

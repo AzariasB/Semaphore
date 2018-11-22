@@ -24,7 +24,7 @@ export class Eye extends Drawable {
      * Creates a new blinking effect
      */
     private renewBlink(){
-        var old = this.radiusBlink;
+        let old = this.radiusBlink;
         this.radiusBlink = this.tween()
             .to({radius: 0}, 200)
             .repeat(1)
