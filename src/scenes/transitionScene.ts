@@ -16,7 +16,7 @@ export class TransitionScene extends Scene {
     private renderEntering = false;
 
     constructor(game: Game) {
-        super(game, "transition");
+        super(game);
     }
 
     init(from: Scene, to, ...params: any[]){

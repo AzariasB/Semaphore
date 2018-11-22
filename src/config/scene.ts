@@ -13,7 +13,7 @@ export abstract class Scene {
         return <Button[]>Array.from(this._objects).map(x => x[1]).filter(x => x instanceof Button);
     }
 
-    constructor(protected game: Game, public readonly name: string) {
+    constructor(protected game: Game) {
     }
 
     public tween(obj: any = this): TWEEN.Tween {

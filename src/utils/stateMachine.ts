@@ -1,6 +1,6 @@
 import { Scene } from "../config/scene";
 import { Game } from "../game";
-import { CustomMouseEvent } from "../config/gameConfig";
+import { CustomMouseEvent, SceneNames } from "../config/gameConfig";
 
 /**
  * Simple state machine to change from scenes
@@ -8,7 +8,6 @@ import { CustomMouseEvent } from "../config/gameConfig";
  */
 export class StateMachine {
 
-    private _scenes: {[key: string] : {new(game: Game): Scene}};
     private _currentScene: Scene;
 
     /**
@@ -18,14 +17,7 @@ export class StateMachine {
         return this._currentScene;
     }
 
-    constructor(private game: Game, scenes: {new(game: Game): Scene}[]) {
-        this._scenes = {};
-        scenes.forEach((constr, i) => {
-            let  s = new constr(game);
-            this._scenes[s.name] = constr;
-            if (i === 0) this._currentScene = s;
-        });
-        this.currentScene.init();
+    constructor(private game: Game, private _scenes: SceneNames) {
     }
 
     /**
@@ -43,7 +35,7 @@ export class StateMachine {
      */
     public changeScene(sceneName: string, ...params: any[]){
         if (!this._scenes[sceneName]) return;
-
+        
         this._currentScene = new this._scenes[sceneName](this.game);
         this._currentScene.init(...params);
     }

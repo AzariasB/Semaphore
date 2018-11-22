@@ -22,7 +22,7 @@ export class GameScene extends Scene {
   private score: Score;
 
   constructor(game: Game) {
-    super(game, "game");
+    super(game);
     this.messenger = this.add(Messenger, game.target.width / 2, 350);
     this.letter =  this.add(Letter, game.target.width / 2, 50);
     this.add(Button, 40, 40, "< Menu", () => game.sm.changeScene('transition', this, 'menu'), 20);

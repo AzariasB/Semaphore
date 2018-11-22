@@ -7,7 +7,7 @@ import { DIFFICULTY } from '../utils/constants';
 export class GameModeChoiceScene extends Scene {
 
     constructor(game: Game){
-        super(game, 'gameModeChoice');
+        super(game);
         this.add(Button, game.target.width / 2, 100, "Infini", () => this.goWithTime(Infinity)),
         this.add(Button, game.target.width / 2, 200, "Facile", () => this.goWithTime(DIFFICULTY.EASY)),
         this.add(Button, game.target.width / 2, 300, "Moyen", () => this.goWithTime(DIFFICULTY.MEDIUM)),

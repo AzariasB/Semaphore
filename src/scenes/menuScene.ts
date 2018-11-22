@@ -9,7 +9,7 @@ import { Game } from '../game';
 export class MenuScene extends Scene {
 
     constructor(game: Game) {
-        super(game, "menu");
+        super(game);
         const playButton = this.add(Button, game.target.width / 2, 100, "Jouer", () => {
             game.sm.changeScene('transition', this, 'gameModeChoice');
         });

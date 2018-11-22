@@ -5,13 +5,17 @@ import { TransitionScene } from './scenes/transitionScene';
 import { GameConfig, CustomMouseEvent } from './config/gameConfig';
 import { StateMachine } from './utils/stateMachine';
 import { SoundEngine } from './utils/soundEngine';
-import * as TWEEN from '@tweenjs/tween.js';
 
 // main game configuration
 const config: GameConfig = {
   width: 800,
   height: 600,
-  scene: [MenuScene, GameScene, GameModeChoiceScene, TransitionScene],
+  scene: {
+    'menu': MenuScene, 
+    'game': GameScene, 
+    'gameModeChoice': GameModeChoiceScene, 
+    'transition': TransitionScene
+  },
   backgroundColor: "#FFFFFF",
   parent: 'game'
 };
@@ -37,6 +41,7 @@ export class Game  {
       parent.appendChild(this.target);
 
       this.sm = new StateMachine(this, config.scene);
+      this.sm.changeScene('menu');
       this.se = new SoundEngine();
   }
 

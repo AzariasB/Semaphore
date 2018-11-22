@@ -20,6 +20,14 @@ export interface CustomMouseEvent extends MouseEvent {
 }
 
 /**
+ * Simple type to store all the available
+ * states of the game
+ */
+export type SceneNames = {
+    [key: string]: {new(game: Game): Scene}
+}
+
+/**
  *  Game configuration, used to initialize the
  * game itself
  */
@@ -39,7 +47,7 @@ export interface GameConfig {
      * A scene must take the game as parameter
      * in the constructor
      */
-    scene?: (new(game: Game) => Scene)[],
+    scene?: SceneNames,
 
     /**
      * background color of the scene
