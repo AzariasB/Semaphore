@@ -25,13 +25,13 @@ export class Eye extends Drawable {
      */
     private renewBlink(){
         var old = this.radiusBlink;
-        this.radiusBlink = new TWEEN.Tween(this)
+        this.radiusBlink = this.tween()
             .to({radius: 0}, 200)
             .repeat(1)
             .easing(TWEEN.Easing.Bounce.InOut)
             .yoyo(true)
             .onComplete(_ => this.renewBlink());
-        if (old) TWEEN.remove(old);
+        if (old) this.scene.removeTween(old);
         this.canBlink = true;
     }
 

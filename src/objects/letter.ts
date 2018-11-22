@@ -18,6 +18,10 @@ export class Letter extends Drawable {
     private letterVisible = false;
     private currentColor = new Color(0, 0, 0);
 
+    public get isLetterVisible(){
+        return this.letterVisible;
+    }
+
     constructor(
         scene: Scene,
         private x: number,
@@ -64,8 +68,12 @@ export class Letter extends Drawable {
      */
     public wrong(){
         if(this.xTween !== null) return;
-        this.currentColor.tween().to({r: 255, g: 0, b: 0}, 250).yoyo(true).repeat(3).start();
-        this.xTween = new TWEEN.Tween(this)
+        this.tween(this.currentColor)
+            .to({r: 255, g: 0, b: 0}, 250)
+            .yoyo(true)
+            .repeat(3)
+            .start();
+        this.xTween = this.tween()
                         .to({xTranslate: 10 * Math.PI}, 1000)
                         .onComplete(() => this.reset())
                         .start();
@@ -87,6 +95,7 @@ export class Letter extends Drawable {
      */
     private reset(){
         this.xTranslate = 0;
+        this.scene.removeTween(this.xTween);
         this.xTween = null;
     }
 

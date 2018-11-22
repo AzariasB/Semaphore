@@ -13,7 +13,6 @@ export class Messenger extends Drawable {
     private flag1: Flag;
     private flag2: Flag;
     private circleRadius = 50;
-    private yTween: TWEEN.Tween;
     private yTranslate = 0;
     private holder: Holder;
 
@@ -27,12 +26,12 @@ export class Messenger extends Drawable {
         this.flag2 = new Flag(scene, x, y, null);
         this.flag1.display = this.flag2.display = false;
         
-        this.yTween = new TWEEN.Tween(this)
-                            .to({yTranslate: 5}, 1000)
-                            .yoyo(true)
-                            .easing(TWEEN.Easing.Cubic.InOut)
-                            .repeat(Infinity)
-                            .start();
+        this.tween()
+            .to({yTranslate: 5}, 1000)
+            .yoyo(true)
+            .easing(TWEEN.Easing.Cubic.InOut)
+            .repeat(Infinity)
+            .start();
     }
 
     /**

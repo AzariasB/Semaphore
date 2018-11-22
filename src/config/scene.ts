@@ -2,18 +2,27 @@ import { CustomMouseEvent } from "./gameConfig";
 import { Game } from "../game";
 import { Drawable } from "../objects/drawable";
 import { Button } from "../objects/button";
-import { GameScene } from "../scenes/gameScene";
-
+import * as TWEEN from '@tweenjs/tween.js';
 
 export abstract class Scene {
 
     private _objects: Map<string, Drawable> = new Map();
+    protected tGroup: TWEEN.Group;
 
     public get buttons(): Button[] {
         return <Button[]>Array.from(this._objects).map(x => x[1]).filter(x => x instanceof Button);
     }
 
     constructor(protected game: Game,public readonly name: string) {
+        this.tGroup = new TWEEN.Group();
+    }
+
+    public tween(obj: any = this): TWEEN.Tween{
+        return new TWEEN.Tween(obj, this.tGroup);
+    }
+
+    public removeTween(tween: TWEEN.Tween){
+        this.tGroup.remove(tween);
     }
 
     public remove(drawable: Drawable){
@@ -39,6 +48,7 @@ export abstract class Scene {
      * @param delta time since last update
      */
     public update(delta: number) {
+        this.tGroup.update();
     }
 
     /**

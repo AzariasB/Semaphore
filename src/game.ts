@@ -42,7 +42,6 @@ export class Game  {
 
   public run() {
     const delta = new Date().getTime() - this.lastUpdate.getTime();
-    TWEEN.update();
     this.ctx.clearRect(0, 0, this.target.width, this.target.height);
     this.sm.update(delta);
     this.sm.draw(this.ctx);

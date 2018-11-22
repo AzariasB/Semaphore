@@ -1,5 +1,6 @@
 import { Drawable } from './drawable';
 import { Scene } from '../config/scene';
+import { DropLetter } from './dropletter';
 
 export class Score extends Drawable {
 
@@ -17,6 +18,10 @@ export class Score extends Drawable {
         return this._score;
     }
 
+    public increment(){
+        this._score++;
+        this.scene.add(DropLetter, '+1', this.x + 30 , this.y - 10, false);
+    }
 
 
     draw(g: CanvasRenderingContext2D) {

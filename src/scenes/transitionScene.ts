@@ -10,7 +10,6 @@ import { drawShape } from '../utils/rendering';
  */
 export class TransitionScene extends Scene {
 
-    private tween: TWEEN.Tween;
     private enteringScene: Scene;
     private exitingScene: Scene;
     private progressPercent = 0;
@@ -26,11 +25,11 @@ export class TransitionScene extends Scene {
         this.progressPercent = 0;
         this.exitingScene = from;
         this.enteringScene = this.game.sm.getScene(to);
-        this.tween = new TWEEN.Tween(this)
-                                .to({progressPercent : 100}, 500)
-                                .easing(TWEEN.Easing.Quadratic.Out)
-                                .onComplete(() => this.openTransition(params))
-                                .start();
+        this.tween()
+                    .to({progressPercent : 100}, 500)
+                    .easing(TWEEN.Easing.Quadratic.Out)
+                    .onComplete(() => this.openTransition(params))
+                    .start();
     }
 
     /**
@@ -39,8 +38,7 @@ export class TransitionScene extends Scene {
      */
     private openTransition(...params: any[]){
         this.renderEntering = true;
-        TWEEN.remove(this.tween);
-        this.tween = new TWEEN.Tween(this)
+        this.tween()
             .to({progressPercent : 0}, 500)
             .delay(100)
             .easing(TWEEN.Easing.Quadratic.In)
@@ -76,7 +74,4 @@ export class TransitionScene extends Scene {
 
         g.restore();
     }   
-
-    update(d: number){
-    }
 }

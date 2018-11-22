@@ -19,13 +19,13 @@ export class Ripple extends Drawable {
         private radius: number = 5,
         color: Color = new Color(0, 255, 0)) {
         super(scene);
-        new TWEEN.Tween(this)
-                        .to({radius: 100, sWidth: 0}, 1000)
-                        .easing(TWEEN.Easing.Quadratic.Out)
-                        .start()
-                        .onComplete(() => this.kill());
+        this.tween()
+            .to({radius: 100, sWidth: 0}, 1000)
+            .easing(TWEEN.Easing.Quadratic.Out)
+            .start()
+            .onComplete(() => this.kill());
         this.color = color;
-        this.color.tween().to({a: 0}, 1000).easing(TWEEN.Easing.Exponential.In).start();
+        this.tween(this.color).to({a: 0}, 1000).easing(TWEEN.Easing.Exponential.In).start();
     }
 
     public draw(g: CanvasRenderingContext2D) {

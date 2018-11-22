@@ -141,7 +141,7 @@ export class Button extends Drawable {
             } else if(ev.type === 'mousemove' && this.state === 'none'){
                 this.state = 'hover';
                 this.clearTween();
-                this.hoverTween = new TWEEN.Tween(this)
+                this.hoverTween = this.tween()
                                         .to({hoverPercent: 100 + (this.height / this.width) * 100}, this.width)
                                         .easing(TWEEN.Easing.Quadratic.Out)
                                         .start();
@@ -150,7 +150,7 @@ export class Button extends Drawable {
         } else if(this.state === 'hover'){
             this.state = 'none';
             this.clearTween();
-            this.hoverTween = new TWEEN.Tween(this)
+            this.hoverTween = this.tween()
                                     .to({hoverPercent: 0}, this.width / 1.2)
                                     .easing(TWEEN.Easing.Quadratic.In)
                                     .start();

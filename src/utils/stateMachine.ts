@@ -25,6 +25,7 @@ export class StateMachine {
             this._scenes[s.name] = constr;
             if (i === 0) this._currentScene = s;
         });
+        this.currentScene.init();
     }
 
     /**

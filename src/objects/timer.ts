@@ -15,7 +15,7 @@ export class Timer extends Drawable {
     private height: number;
     private heightTween: TWEEN.Tween = null;
     private clrTween: TWEEN.Tween = null;
-    private callbacks = [];
+    private callbacks = [];// Actually needs these callabacks, not to destroy the timer, but to warn when time is over
 
     constructor(scene: Scene,
                 private x: number, 
@@ -49,11 +49,11 @@ export class Timer extends Drawable {
         this.height = this.startHeight;
         this.color = new Color(0, 255, 0);
 
-        this.heightTween = new TWEEN.Tween(this)
+        this.heightTween = this.tween()
                                 .to({height: 0}, this.totalTime)
                                 .onComplete(() => this.callbacks.map(c => c()))
                                 .start();
-        this.clrTween = this.color.tween()
+        this.clrTween = this.tween(this.color)
             .to({r: 255, g: 0}, this.totalTime)
             .start();
     }

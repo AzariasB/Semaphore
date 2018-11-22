@@ -17,6 +17,10 @@ export abstract class Drawable {
 
     }
 
+    protected tween(obj: any = this){
+        return this.scene.tween(obj);
+    }
+
     public kill() {
         this.scene.remove(this);
         this.scene = null;

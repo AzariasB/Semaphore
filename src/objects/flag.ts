@@ -15,12 +15,6 @@ export class Flag extends Drawable {
     public display: boolean = true;
 
     /**
-     * A small additional floating effect
-     * that affects the flag itself
-     */
-    private readonly yTween: TWEEN.Tween;
-
-    /**
      * y used for the floating effect
      */
     private yTranslate = 0;
@@ -33,7 +27,7 @@ export class Flag extends Drawable {
                 private length:number = 150,
                 private flagSide: number = 50){
             super(scene);
-            this.yTween = new TWEEN.Tween(this)
+            this.tween()
                     .to({yTranslate: 5}, 1000)
                     .yoyo(true)
                     .easing(TWEEN.Easing.Quadratic.InOut)

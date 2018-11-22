@@ -17,18 +17,10 @@ export class MenuScene extends Scene {
         this.add(Button, game.target.width / 2, 300, "Aide");
         this.add(Button, game.target.width / 2, 400, "A propos");
     }
-
-    update(delta: number){  
-    }
-
     /**
      * Draws all the button
      */
     draw(g: CanvasRenderingContext2D) {
         super.draw(g);
-    }
-
-    handleKeyboardEvent(ev: KeyboardEvent) {
-        
     }
 }
