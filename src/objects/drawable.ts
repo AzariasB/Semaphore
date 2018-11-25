@@ -3,7 +3,9 @@ import { Scene } from '../config/scene';
 
 /**
  * Interface for all the drawable
- * elements of the game
+ * elements of the game,
+ * also has an optionnal 'update' method
+ * if some additionnal updates must be made
  */
 export abstract class Drawable {
 
@@ -14,6 +16,9 @@ export abstract class Drawable {
     }
 
     constructor(protected scene: Scene) {
+    }
+
+    public update(delta: number){
 
     }
 

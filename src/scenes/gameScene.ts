@@ -7,6 +7,7 @@ import { Timer } from '../objects/timer';
 import { Sound } from '../utils/soundEngine';
 import { Button } from '../objects/button';
 import { Score } from '../objects/score';
+import { ButtonOptions } from '../config/gameConfig';
 
 
 
@@ -25,7 +26,13 @@ export class GameScene extends Scene {
     super(game);
     this.messenger = this.add(Messenger, game.target.width / 2, 350);
     this.letter =  this.add(Letter, game.target.width / 2, 50);
-    this.add(Button, 40, 40, "< Menu", () => game.sm.changeScene('transition', this, 'menu'), 20);
+    this.add(Button, <ButtonOptions>{
+      click: () => this.game.sm.changeScene('transition', this, 'menu'),
+      text: '< Menu',
+      x: 40,
+      y: 40,
+      width: 100,
+    });
 
   }
 

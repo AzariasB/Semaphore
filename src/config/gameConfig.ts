@@ -1,5 +1,6 @@
 import { Scene } from "./scene";
 import { Game } from "../game";
+import { Color } from "../utils/color";
 
 /**
  * Custom interface for the mouseevent, to get
@@ -25,6 +26,38 @@ export interface CustomMouseEvent extends MouseEvent {
  */
 export type SceneNames = {
     [key: string]: {new(game: Game): Scene}
+}
+
+
+export enum VerticalAlign{
+    top,
+    center,
+    bottom
+}
+
+export enum HorizontalAlign{
+    left,
+    center,
+    right
+}
+
+/**
+ * When creating a button,
+ * these are all the possible options
+ * to choose from
+ */
+export interface ButtonOptions {
+    width?: number;
+    height?: number;
+    fontSize: number;// default = 50;
+    fontColor?: Color;
+    x: number;
+    y: number;
+    text: string;
+    click: () => void;
+    verticalAlign: VerticalAlign; // default = VerticalAlign.center;
+    horizontalAlign: HorizontalAlign;// default = HorizontalAlign.center;
+    visible: boolean; //default = true;
 }
 
 /**

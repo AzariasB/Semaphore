@@ -1,0 +1,226 @@
+
+@font-face{
+    font-family: Connection;
+    src: url('/assets/font/Connection.ttf')
+}
+
+html{
+    width: 100vw;
+    font-family: Connection;
+    height: 100vh;
+    overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.pannel{
+    background-color: rebeccapurple;
+    width: 34vw;
+    padding: 50px;
+    position: absolute;
+    top: 0px;
+    height: 100vh;
+    transition-timing-function: cubic-bezier(1.000, -0.100, 0.025, 0.995);
+    transition-property: all;
+    z-index: 0;
+
+    .menu{
+        z-index: 999;
+        background-color: rebeccapurple;
+        box-shadow: 10px 0px 10px 5px rgba(0,0,0,1);
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        height: 100%;
+    }
+}
+
+.pannel-1{
+    left: 0px;
+    transition-duration: 1s;
+}
+
+.pannel-2{
+    left: 33vw;
+    transition-duration: 0.6s;
+
+    &.hiding{
+        left: 0vw;
+    }
+}
+
+.pannel-3{
+    left: 33vw;
+    transition-duration: 0.6s;
+
+    &.hiding{
+        left: 0vw;
+    }
+}
+
+h2{
+    font-size: 50px;
+    width: 100%;
+    text-align: center;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+#side-draw{
+    width: 50vw;
+    height: 100vh;
+    position: absolute;
+    background-color: white;
+    top: 0px;
+    right: 0px;
+
+}
+
+ul.btn-list{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-inline-start: 0px;
+
+    &>li{
+        list-style-type: none;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+
+        button{
+            cursor: pointer;
+            color: white;
+            background: #6225E6;
+            box-shadow: 6px 6px 0 black;
+            transform: skewX(-15deg);
+            transition: 1s;
+            font-size: 55px;
+            font-family: Connection;
+            outline: none;
+            border: none;
+
+            i{
+                font-size: 30px;
+                padding-left: 20px;
+                color: #6225E6;
+                transition: 1s;
+            }
+
+            &:hover{
+                transition: 0.5s;
+                box-shadow: 10px 10px 0 #FBC638;
+
+                i{
+                    color: #FBC638;
+                    transition: 0.5s;
+                    animation: color_anim 1s infinite;
+                }
+
+            }
+
+            &:active{
+                transition: 0.2s;
+                box-shadow: 4px 4px 0 #9e7702;
+            }
+        }
+    }
+}
+
+.cta {
+    span{
+        display: flex;
+    }
+
+    display: flex;
+    justify-content: center;
+    flex-flow: row;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 55px;
+    color: white;
+    background: #6225E6;
+    transition: 1s;
+    box-shadow: 6px 6px 0 black;
+    transform: skewX(-15deg);
+
+    &:focus{
+        outline: none;
+    }
+
+    ul{
+        padding-inline-start: 0px;
+        margin: 0px;
+        display: flex;
+        width: 50px;
+        transition: 0.5s;
+
+        li{
+            list-style-type: none;
+
+            &.ar-one{
+                transition: 0.4s;
+                transform: translateX(-200%);
+            }
+
+            &.ar-two{
+                transition: 0.5s;
+                transform: translateX(-100%);
+            }
+        }
+
+    }
+
+    &:hover{
+        transition: 0.5s;
+        box-shadow: 10px 10px 0 #FBC638;
+
+        ul {
+            transition: 0.5s;
+            margin-right: 45px;
+        }
+
+        ul li{
+            &.ar-three{
+                transform: translateX(0%);
+                animation: color_anim 1s infinite 0.6s;
+            }
+
+            &.ar-two{
+                transform: translateX(0%);
+                animation: color_anim 1s infinite 0.4s;
+            }
+
+            &.ar-one{
+                transform: translateX(0%);
+                animation: color_anim 1s infinite 0.2s;
+            }
+        }
+    }
+
+}
+
+@keyframes color_anim {
+    0% {
+        color: white;
+    }
+    50% {
+        color: #FBC638;
+    }
+    100% {
+        color: white;
+    }
+}

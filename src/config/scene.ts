@@ -1,4 +1,4 @@
-import { CustomMouseEvent } from "./gameConfig";
+import { CustomMouseEvent, ButtonOptions } from "./gameConfig";
 import { Game } from "../game";
 import { Drawable } from "../objects/drawable";
 import { Button } from "../objects/button";
@@ -7,6 +7,7 @@ import * as TWEEN from '@tweenjs/tween.js';
 export abstract class Scene {
 
     private _objects: Map<string, Drawable> = new Map();
+    private _buttons: Map<string, Button> = new Map();
     protected tGroup: TWEEN.Group  = new TWEEN.Group();
 
     public get buttons(): Button[] {
@@ -28,7 +29,14 @@ export abstract class Scene {
         this._objects.delete(drawable.UUID);
     }
 
-    public add<T extends Drawable>(type: {new(...parmas: any[]): T}, ...params: any[]){
+    public button(options: ButtonOptions)
+    {
+        const btn = new Button(this, options);
+        this._buttons.set(btn.UUID, btn);
+        return btn;
+    }
+
+    public add<T extends Drawable>(type: {new(...params: any[]): T}, ...params: any[]){
         const obj = new type(this, ...params);
         this._objects.set(obj.UUID, obj);
         return obj;

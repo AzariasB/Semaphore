@@ -8,7 +8,11 @@
     "Tutorials"
   ],
   "devDependencies": {
+    "css-loader": "^1.0.1",
     "expose-loader": "0.7.5",
+    "node-sass": "^4.10.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
     "ts-loader": "4.4.2",
     "webpack": "^4.19.0",
     "webpack-cli": "3.0.8",

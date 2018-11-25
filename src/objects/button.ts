@@ -1,5 +1,5 @@
 import { Drawable } from "./drawable";
-import { CustomMouseEvent } from "../config/gameConfig";
+import { CustomMouseEvent, ButtonOptions } from "../config/gameConfig";
 import * as TWEEN from '@tweenjs/tween.js';
 import { drawShape } from "../utils/rendering";
 import { Scene } from "../config/scene";
@@ -51,14 +51,18 @@ export class Button extends Drawable {
      */
     private readonly height = Button.MAX_HEIGHT;
 
-    constructor(scene: Scene,
-                private x: number,
-                private y: number,
-                private text: string,
-                callback? : () => void,
-                private fontSize: number = 50){
+    private x: number;
+    private y: number;
+    private fontSize: number;
+    private text: string;
+
+    constructor(scene: Scene, options: ButtonOptions ){
         super(scene);
-        if(callback)this.listeners.push(callback);
+        this.x = options.x;
+        this.y = options.y;
+        this.fontSize = options.fontSize || 50;
+        this.text = options.text;
+        if(options.click)this.listeners.push(options.click);
     }
 
     /**
@@ -103,7 +107,7 @@ export class Button extends Drawable {
      */
     draw(g: CanvasRenderingContext2D) {
         g.save();
-        g.translate(-this.width / 2, - this.height / 2);
+        g.translate(0, 0);
         g.font = `${this.height - (this.height - this.fontSize)}pt Connection`;
         if (this.width === null) this.width = g.measureText(this.text).width + 20;
 

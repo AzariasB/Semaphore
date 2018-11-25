@@ -1,17 +1,29 @@
 var path = require('path');
-var pathToPhaser = path.join(__dirname, '/node_modules/phaser/');
-var phaser = path.join(pathToPhaser, 'dist/phaser.js');
 
 module.exports = {
-  entry: './src/game.ts',
+  entry: ['./src/game.ts', './styles/scss/style.scss'],
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js',
+    filename: 'bundle.js'
   },
   module: {
     rules: [
+      { test: /\.html$/, loader: 'raw-loader', exclude: '/node_modules/'},
       { test: /\.ts$/, loader: 'ts-loader', exclude: '/node_modules/' },
-      { test: /phaser\.js$/, loader: 'expose-loader?Phaser' }
+      {
+          test: /\.scss$/,
+          use: [{
+              loader: "style-loader"
+          }, {
+              loader: "css-loader"
+          }, {
+              loader: "sass-loader",
+              options: {
+                  file: "style/scss/styl.scss",
+                  outFile: "style/css/style.css"
+              }
+          }]
+      }
     ]
   },
   devServer: {
@@ -19,12 +31,10 @@ module.exports = {
     publicPath: '/build/',
     host: '127.0.0.1',
     port: 8080,
-    open: true
+    open: true,
+    watchContentBase: true
   },
   resolve: {
     extensions: ['.ts', '.js'],
-    alias: {
-      phaser: phaser
-    }
   }
 };

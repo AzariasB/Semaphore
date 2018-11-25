@@ -16,7 +16,7 @@ const config: GameConfig = {
     'gameModeChoice': GameModeChoiceScene, 
     'transition': TransitionScene
   },
-  backgroundColor: "#FFFFFF",
+  backgroundColor: "rgba(0,0,0,0)",
   parent: 'game'
 };
 
@@ -67,9 +67,18 @@ export class Game  {
   }
 }
 
+function showPanel(toShow: string){
+  const hidden = document.getElementsByClassName('pannel');
+
+
+  const menu = document.getElementById(toShow);
+  const className = menu.className;
+  menu.className = className.replace('hiding', '');
+}
+
 // when the page is loaded, create our game instance
 window.onload = () => {
-  var game = new Game(config);
+  /* var game = new Game(config);
   game.se.load().then(success => {
     game.run();
   })
@@ -81,5 +90,13 @@ window.onload = () => {
   });
   game.target.addEventListener('mousemove', m => {
     game.handleMouseEvent(m);
-  })
+  })*/
+
+  document.getElementById('play-btn').addEventListener('click', () => {
+    showPanel('gameModeChoice');
+  });
+
+  document.getElementById('clock-btn').addEventListener('click', () => {
+    showPanel('clockChoice');
+  });
 };

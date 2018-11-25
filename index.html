@@ -5,12 +5,49 @@
     <meta name="author" content="digitsensitive">
     <title>Semaphore</title>
     <link rel="stylesheet" type="text/css" href="styles/css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
     <script src="build/bundle.js"></script>
   </head>
   <body>
     <div class="container" >
-      <h1>Semaphore</h1>
-      <div id="game"></div>
+      <!-- <h1>Semaphore</h1> -->
+      <canvas id="side-draw" ></canvas>
+      <div id="menu" class="pannel pannel-1" >
+        <div class="menu">
+            <h2>Menu</h2>
+            <ul class="btn-list" >
+                <li><button id="play-btn" >
+                  Jouer
+                </button></li>
+                <li><button >Entraînement</button></li>
+                <li><button>Options</button></li>
+                <li><button>Aide</button></li>
+                <li><button>A propos</button></li>
+            </ul>
+        </div>
+        <div id="gameModeChoice" class="pannel pannel-2 hiding" >
+          <div class="menu">
+              <h2>Choix du type de jeu</h2>
+              <ul class="btn-list" >
+                  <li><button>Infini</button></li>
+                  <li><button id="clock-btn" >Contre la montre</button></li>
+                  <li><button>Meilleur score</button></li>
+                </ul>
+          </div>
+                <div id="clockChoice" class="pannel pannel-3 hiding">
+                  <div class="menu">
+                      <h2>Temps de jeu</h2>
+                      <ul class="btn-list" >
+                        <li><button>30 secondes</button></li>
+                        <li><button>1 minute</button></li>
+                        <li><button>2 minutes</button></li>
+                        <li><button>5 minutes</button></li>
+                      </ul>
+                  </div>
+                </div>
+          </div>
+      </div>
     </div>
   </body>
 </html>
