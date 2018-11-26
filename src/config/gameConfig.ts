@@ -3,24 +3,6 @@ import { Game } from "../game";
 import { Color } from "../utils/color";
 
 /**
- * Custom interface for the mouseevent, to get
- * the position of the mouse relative to the
- * canvas
- */
-export interface CustomMouseEvent extends MouseEvent {
-    
-    /**
-     * x position of the mouse relative to the canvas
-     */
-    a?: number;
-
-    /**
-     * y position of the mouse relative to the canvas
-     */
-    b?: number;
-}
-
-/**
  * Simple type to store all the available
  * states of the game
  */
@@ -41,24 +23,6 @@ export enum HorizontalAlign{
     right
 }
 
-/**
- * When creating a button,
- * these are all the possible options
- * to choose from
- */
-export interface ButtonOptions {
-    width?: number;
-    height?: number;
-    fontSize: number;// default = 50;
-    fontColor?: Color;
-    x: number;
-    y: number;
-    text: string;
-    click: () => void;
-    verticalAlign: VerticalAlign; // default = VerticalAlign.center;
-    horizontalAlign: HorizontalAlign;// default = HorizontalAlign.center;
-    visible: boolean; //default = true;
-}
 
 /**
  *  Game configuration, used to initialize the

@@ -1,8 +1,5 @@
 import { GameScene } from "./scenes/gameScene";
-import { MenuScene } from './scenes/menuScene';
-import { GameModeChoiceScene } from './scenes/gameModeChoiceScene';
-import { TransitionScene } from './scenes/transitionScene';
-import { GameConfig, CustomMouseEvent } from './config/gameConfig';
+import { GameConfig } from './config/gameConfig';
 import { StateMachine } from './utils/stateMachine';
 import { SoundEngine } from './utils/soundEngine';
 import { UIUtils } from './utils/ui';
@@ -12,10 +9,7 @@ const config: GameConfig = {
   width: 800,
   height: 600,
   scene: {
-    'menu': MenuScene, 
     'game': GameScene, 
-    'gameModeChoice': GameModeChoiceScene, 
-    'transition': TransitionScene
   },
   backgroundColor: "rgba(0,0,0,0)",
   parent: 'game'
@@ -42,7 +36,7 @@ export class Game  {
       parent.appendChild(this.target);
 
       this.sm = new StateMachine(this, config.scene);
-      this.sm.changeScene('menu');
+      this.sm.changeScene('game');
       this.se = new SoundEngine();
   }
 
@@ -58,41 +52,19 @@ export class Game  {
   public handleKeyboardEvent(ev: KeyboardEvent) {
     this.sm.handleKeyboardEvent(ev);
   }
-
-  public handleMouseEvent(ev: MouseEvent){
-    const rect = this.target.getBoundingClientRect();
-    const custom: CustomMouseEvent = ev;
-    custom.a = ev.x - rect.left;
-    custom.b = ev.y - rect.top;  
-    this.sm.handleMouseEvent(ev, this.ctx);
-  }
-}
-
-function showPanel(toShow: string){
-  const hidden = document.getElementsByClassName('pannel');
-
-
-  const menu = document.getElementById(toShow);
-  const className = menu.className;
-  menu.className = className.replace('hiding', '');
 }
 
 // when the page is loaded, create our game instance
 window.onload = () => {
-  const ui = new UIUtils();
-  ui.setup();
-  /* var game = new Game(config);
+  const game = new Game(config);
   game.se.load().then(success => {
-    game.run();
-  })
-  window.addEventListener('keydown', ev => {
+    const ui = new UIUtils(game);
+    ui.setup();
+    //game.run();
+  });
+  /* window.addEventListener('keydown', ev => {
     game.handleKeyboardEvent(ev);
   });
-  game.target.addEventListener('mousedown', m => {
-    game.handleMouseEvent(m);
-  });
-  game.target.addEventListener('mousemove', m => {
-    game.handleMouseEvent(m);
-  })*/
+  */
 
 };

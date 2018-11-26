@@ -1,6 +1,6 @@
 import { Scene } from "../config/scene";
 import { Game } from "../game";
-import { CustomMouseEvent, SceneNames } from "../config/gameConfig";
+import { SceneNames } from "../config/gameConfig";
 
 /**
  * Simple state machine to change from scenes
@@ -63,10 +63,6 @@ export class StateMachine {
 
     public handleKeyboardEvent(ev: KeyboardEvent){
         this._currentScene.handleKeyboardEvent(ev);
-    }
-
-    public handleMouseEvent(ev: CustomMouseEvent, g: CanvasRenderingContext2D){
-        this._currentScene.handleMouseEvent(ev, g);
     }
 
 }

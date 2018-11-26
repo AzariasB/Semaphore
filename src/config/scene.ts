@@ -1,18 +1,11 @@
-import { CustomMouseEvent, ButtonOptions } from "./gameConfig";
 import { Game } from "../game";
 import { Drawable } from "../objects/drawable";
-import { Button } from "../objects/button";
 import * as TWEEN from '@tweenjs/tween.js';
 
 export abstract class Scene {
 
     private _objects: Map<string, Drawable> = new Map();
-    private _buttons: Map<string, Button> = new Map();
     protected tGroup: TWEEN.Group  = new TWEEN.Group();
-
-    public get buttons(): Button[] {
-        return <Button[]>Array.from(this._objects).map(x => x[1]).filter(x => x instanceof Button);
-    }
 
     constructor(protected game: Game) {
     }
@@ -29,12 +22,6 @@ export abstract class Scene {
         this._objects.delete(drawable.UUID);
     }
 
-    public button(options: ButtonOptions)
-    {
-        const btn = new Button(this, options);
-        this._buttons.set(btn.UUID, btn);
-        return btn;
-    }
 
     public add<T extends Drawable>(type: {new(...params: any[]): T}, ...params: any[]){
         const obj = new type(this, ...params);
@@ -72,19 +59,6 @@ export abstract class Scene {
      */
     public handleKeyboardEvent(ev: KeyboardEvent) {
 
-    }
-
-    /**
-     * 
-     * @param ev The mouse event to handle
-     * @param g the canvas where the mouse event happened
-     */
-    public handleMouseEvent(ev: CustomMouseEvent, g: CanvasRenderingContext2D){
-        if(this.buttons.some(m => m.handleMouseClick(ev, g))){
-            this.game.target.style.cursor = 'pointer';
-        } else {
-            this.game.target.style.cursor = 'default';
-        }
     }
 
 }

@@ -15,6 +15,14 @@ html{
   box-sizing: border-box;
 }
 
+#game{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
 p{
     font-size: 30px;
     margin-left: 10px;
