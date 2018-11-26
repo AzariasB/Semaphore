@@ -5,6 +5,7 @@ import { TransitionScene } from './scenes/transitionScene';
 import { GameConfig, CustomMouseEvent } from './config/gameConfig';
 import { StateMachine } from './utils/stateMachine';
 import { SoundEngine } from './utils/soundEngine';
+import { UIUtils } from './utils/ui';
 
 // main game configuration
 const config: GameConfig = {
@@ -78,6 +79,8 @@ function showPanel(toShow: string){
 
 // when the page is loaded, create our game instance
 window.onload = () => {
+  const ui = new UIUtils();
+  ui.setup();
   /* var game = new Game(config);
   game.se.load().then(success => {
     game.run();
@@ -92,11 +95,4 @@ window.onload = () => {
     game.handleMouseEvent(m);
   })*/
 
-  document.getElementById('play-btn').addEventListener('click', () => {
-    showPanel('gameModeChoice');
-  });
-
-  document.getElementById('clock-btn').addEventListener('click', () => {
-    showPanel('clockChoice');
-  });
 };

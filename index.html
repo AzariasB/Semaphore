@@ -17,13 +17,11 @@
         <div class="menu">
             <h2>Menu</h2>
             <ul class="btn-list" >
-                <li><button id="play-btn" >
-                  Jouer
-                </button></li>
-                <li><button >Entraînement</button></li>
-                <li><button>Options</button></li>
-                <li><button>Aide</button></li>
-                <li><button>A propos</button></li>
+                <li><button data-target="gameModeChoice">Jouer</button></li>
+                <li><button data-target="training">Entraînement</button></li>
+                <li><button data-target="options">Options</button></li>
+                <li><button data-target="help" >Aide</button></li>
+                <li><button data-target="about" >A propos</button></li>
             </ul>
         </div>
         <div id="gameModeChoice" class="pannel pannel-2 hiding" >
@@ -31,22 +29,105 @@
               <h2>Choix du type de jeu</h2>
               <ul class="btn-list" >
                   <li><button>Infini</button></li>
-                  <li><button id="clock-btn" >Contre la montre</button></li>
-                  <li><button>Meilleur score</button></li>
+                  <li><button data-target="clockChoice" >Contre la montre</button></li>
+                  <li><button data-target="precisionChoice" >Précision</button></li>
                 </ul>
           </div>
-                <div id="clockChoice" class="pannel pannel-3 hiding">
-                  <div class="menu">
-                      <h2>Temps de jeu</h2>
-                      <ul class="btn-list" >
-                        <li><button>30 secondes</button></li>
-                        <li><button>1 minute</button></li>
-                        <li><button>2 minutes</button></li>
-                        <li><button>5 minutes</button></li>
-                      </ul>
-                  </div>
-                </div>
+          <div id="clockChoice" class="pannel pannel-3 hiding">
+            <div class="menu">
+                <h2>Temps de jeu</h2>
+                <ul class="btn-list" >
+                  <li><button>30 secondes</button></li>
+                  <li><button>1 minute</button></li>
+                  <li><button>2 minutes</button></li>
+                  <li><button>5 minutes</button></li>
+                </ul>
+            </div>
           </div>
+          <div id="precisionChoice" class="pannel pannel-3 hiding">
+              <div class="menu">
+                  <h2>Difficulté</h2>
+                  <ul class="btn-list" >
+                    <li><button>Facile</button></li>
+                    <li><button>Moyen</button></li>
+                    <li><button>Difficile</button></li>
+                  </ul>
+              </div>
+            </div>
+        </div>
+        <div id="training" class="pannel pannel-2 hiding" >
+          <div class="menu">
+            <h2>Entraînement</h2>
+            <ul class="btn-list" >
+                <li><label><input type="checkbox" value="1er cycle" > <span>1er cycle</span></label> </li>
+                <li><label><input type="checkbox" value="2ème cycle" > <span>2ème cycle</span></label> </li>
+                <li><label><input type="checkbox" value="3ème cycle" > <span>3ème cycle</span></label> </li>
+                <li><label><input type="checkbox" value="4ème cycle" > <span>4ème cycle </span></label> </li>
+                <hr/>
+                <li><button>Jouer</button></li>
+            </ul>
+          </div>
+        </div>
+        <div id="options" class="pannel pannel-2 hiding" >
+          <div class="menu">
+            <h2>Options</h2>
+          </div>
+        </div>
+        <div id="help" class="pannel pannel-2 hiding">
+          <div class="menu">
+            <h2>Aide</h2>
+            <ul class="btn-list" >
+              <li><button data-target="howToPlay" >Le jeu</button></li>
+              <li><button data-target="howToTrain" >L'entraînement</button></li>
+              <li><button data-target="whatIs" >Le sémaphore</button></li>
+            </ul>
+          </div>
+          <div id="howToPlay" class="pannel pannel-3 hiding" >
+            <div class="menu">
+              <h2>Le jeu</h2>
+              <ul>
+                <li>
+                  <p>
+                    Pour jouer, il suffit d'appuyer sur la touche du clavier correspondant
+                    à la lettre qui est affichée en sémaphore sur l'écran.
+                  </p>
+                </li>
+                <li>
+                    <p>
+                        Si la réponse est correcte, une autre lettre sera affichée, sinon une animation
+                        se déclenchera pour indiquer que la réponse n'est pas bonne, et vous devrez essayer avec d'autres lettres
+                      </p>
+                </li>
+                <li>
+                    <p>
+                        Différents mode de jeux existent, <b>Contre la montre</b> consiste à trouver le plus de bonne lettre avant la fin du temps.
+                        <b>Précision</b> consiste à deviner du premier coup le plus grand nombre de lettres.
+                    </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div id="howToTrain" class="pannel pannel-3 hiding">
+            <div class="menu">
+              <h2>L'entraînement</h2>
+            </div>
+          </div>
+          <div id="whatIs" class="pannel pannel-3 hiding">
+            <div  class="menu">
+              <h2>Le sémaphore</h2>
+            </div>
+          </div>
+        </div>
+        <div id="about"class="pannel pannel-2 hiding">
+          <div class="menu">
+            <h2>A propos</h2>
+            <ul>
+              <li><p><i class="fas fa-male" > </i> Programmé par <a href="https://github.com/AZariasB/" target="_blank">Azarias</a></p></li>
+              <li><p><i class="fas fa-laptop" > </i> Ecrit en Typescript, HTML5, Sass</p></li>
+              <li><p><i class="fas fa-music" > </i> Musique et sons : <a target="_blank" href="https://opengameart.org/" >OpenGameArt</a> </p></li>
+            </ul>>
+          </div>
+        </div>
       </div>
     </div>
   </body>
