@@ -6,8 +6,6 @@ import { UIUtils } from './utils/ui';
 
 // main game configuration
 const config: GameConfig = {
-  width: 800,
-  height: 600,
   scene: {
     'game': GameScene, 
   },
@@ -25,15 +23,11 @@ export class Game  {
   public se: SoundEngine;
 
   constructor(private config: GameConfig) {
-      this.target = document.createElement('canvas');
+      this.target = <HTMLCanvasElement>document.getElementById(config.parent);
       this.ctx = this.target.getContext('2d');
-      this.ctx.translate(0.5, 0.5);
-      this.target.width = config.width;
-      this.target.height = config.height;
       this.target.style.backgroundColor = config.backgroundColor;
       const parent = document.getElementById(config.parent);
       if (!parent) throw new Error("Parent not found");
-      parent.appendChild(this.target);
 
       this.sm = new StateMachine(this, config.scene);
       this.sm.changeScene('game');
@@ -62,9 +56,7 @@ window.onload = () => {
     ui.setup();
     //game.run();
   });
-  /* window.addEventListener('keydown', ev => {
+  window.addEventListener('keydown', ev => {
     game.handleKeyboardEvent(ev);
   });
-  */
-
 };

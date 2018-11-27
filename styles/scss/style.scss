@@ -4,9 +4,21 @@
     src: url('/assets/font/Connection.ttf')
 }
 
+// Variables
+$panel-bg: #086788;
+$button-bg: #FFF1D0;
+$button-shadow: #F0C808;
+$checkbox-checked: #06AED5;
+$button-active: rgb(43, 13, 107);
+$button-active-shadow: #22223B;
+$shadow-color: rgb(68, 68, 68);
+$font-color: black;
+$btn-color: #042f3d;
+
 html{
     width: 100vw;
     font-family: Connection;
+    color: $font-color;
     height: 100vh;
     overflow: hidden;
 }
@@ -29,7 +41,7 @@ p{
 }
 
 .pannel{
-    background-color: rebeccapurple;
+    background-color: $panel-bg;
     width: 34vw;
     padding: 50px;
     position: absolute;
@@ -42,8 +54,8 @@ p{
 
     .menu{
         z-index: 999;
-        background-color: rebeccapurple;
-        box-shadow: 10px 0px 10px 5px rgba(0,0,0,1);
+        background-color: $panel-bg;
+        box-shadow: 10px 0px 10px 5px $shadow-color;
         width: 100%;
         position: absolute;
         top: 0px;
@@ -112,6 +124,10 @@ ul.btn-list{
 
         button, label{
 
+            &.selected {
+                background: $checkbox-checked;
+            }
+
             input[type=checkbox]{
                 display: none;
             }
@@ -123,13 +139,13 @@ ul.btn-list{
             }
 
             :checked + span{
-                background: #149e02;
+                background: $checkbox-checked;
             }
 
             cursor: pointer;
-            color: white;
-            background: #6225E6;
-            box-shadow: 6px 6px 0 black;
+            color: $btn-color;
+            background: $button-bg;
+            box-shadow: 6px 6px 0 $shadow-color;
             transform: skewX(-15deg);
             transition: 1s;
             font-size: 55px;
@@ -140,16 +156,16 @@ ul.btn-list{
             i{
                 font-size: 30px;
                 padding-left: 20px;
-                color: #6225E6;
+                color: $button-bg;
                 transition: 1s;
             }
 
             &:hover{
                 transition: 0.5s;
-                box-shadow: 10px 10px 0 #FBC638;
+                box-shadow: 10px 10px 0 $button-shadow;
 
                 i{
-                    color: #FBC638;
+                    color: $btn-color;
                     transition: 0.5s;
                     animation: color_anim 1s infinite;
                 }
@@ -158,8 +174,8 @@ ul.btn-list{
 
             &:active{
                 transition: 0.2s;
-                background: rgb(43, 13, 107);
-                box-shadow: 4px 4px 0 #9e7702;
+                background: $button-active;
+                box-shadow: 4px 4px 0 $button-active-shadow;
             }
         }
     }
@@ -177,9 +193,9 @@ ul.btn-list{
     text-decoration: none;
     font-size: 55px;
     color: white;
-    background: #6225E6;
+    background: $button-bg;
     transition: 1s;
-    box-shadow: 6px 6px 0 black;
+    box-shadow: 6px 6px 0 $shadow-color;
     transform: skewX(-15deg);
 
     &:focus{
@@ -211,7 +227,7 @@ ul.btn-list{
 
     &:hover{
         transition: 0.5s;
-        box-shadow: 10px 10px 0 #FBC638;
+        box-shadow: 10px 10px 0 $button-shadow;
 
         ul {
             transition: 0.5s;
@@ -243,7 +259,7 @@ ul.btn-list{
         color: white;
     }
     50% {
-        color: #FBC638;
+        color: $button-shadow;
     }
     100% {
         color: white;
