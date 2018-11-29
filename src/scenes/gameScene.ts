@@ -17,7 +17,6 @@ export class GameScene extends Scene {
   private letter: Letter;
   private timer: Timer;
   private score: Score;
-  private gameStarted: boolean = false;
 
   constructor(game: Game) {
     super(game);
@@ -83,8 +82,6 @@ export class GameScene extends Scene {
   }
 
   handleKeyboardEvent(ev: KeyboardEvent){
-    if(!this.gameStarted) return;
-
     if( /^[a-z]$/.test(ev.key)){
       this.checkAnswer(ev.key);
     }

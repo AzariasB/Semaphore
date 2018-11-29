@@ -1,22 +1,25 @@
-import { Game } from "../game";
+import { Scene } from '../config/scene';
+import { Game } from '../game';
 
-function id(id: string){
-    return document.getElementById(id);
+
+function id(target: string){
+    return document.getElementById(target);
 }
 
-export class UIUtils {
+export class MenuScene extends Scene {
 
     private panels: HTMLElement[] = [];
     private btns: HTMLButtonElement[] = [];
 
-    constructor(private game: Game){
+    constructor(game: Game){
+        super(game);
+        this.setup();
     }
 
     private hide = (el: HTMLElement) => el.classList.add('hiding');
     private show = (el: HTMLElement) => el.classList.remove('hiding');
     private select = (el: HTMLElement) => el.classList.add('selected');
     private deselect = (el: HTMLElement) => el.classList.remove('selected');
-
 
     private togglePannel(panel: HTMLElement, btn: HTMLButtonElement){
         if(panel.classList.contains('pannel-2')){
@@ -66,6 +69,16 @@ export class UIUtils {
                 this.togglePannel(id(target), x);
             });
         });
+        buttons.filter(x => x.hasAttribute('data-time')).map(x => {
+            const time = +x.getAttribute('data-time');
+            x.addEventListener('click', () => {
+                this.panels.map(x => this.hide(x));
+                this.panels = [];
+                this.btns.map(x => this.deselect(x));
+                this.btns = [];
+                document.getElementById('menu').classList.add('hiding');
+                this.game.sm.changeScene('game');
+            });
+        });
     }
-
 }

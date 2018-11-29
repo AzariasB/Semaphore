@@ -8,7 +8,8 @@
 $panel-bg: #086788;
 $button-bg: #FFF1D0;
 $button-shadow: #F0C808;
-$checkbox-checked: #06AED5;
+$checkbox-checked: rgb(62, 240, 8);
+$button-selected : #06AED5;
 $button-active: rgb(43, 13, 107);
 $button-active-shadow: #22223B;
 $shadow-color: rgb(68, 68, 68);
@@ -70,6 +71,10 @@ p{
 
 .pannel-1{
     left: 0px;
+
+    &.hiding{
+        left: - 100%;
+    }
 }
 
 .pannel-2, .pannel-3{
@@ -125,8 +130,9 @@ ul.btn-list{
         button, label{
 
             &.selected {
-                background: $checkbox-checked;
+                background: $button-selected;
             }
+
 
             input[type=checkbox]{
                 display: none;

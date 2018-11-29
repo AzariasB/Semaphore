@@ -2,12 +2,13 @@ import { GameScene } from "./scenes/gameScene";
 import { GameConfig } from './config/gameConfig';
 import { StateMachine } from './utils/stateMachine';
 import { SoundEngine } from './utils/soundEngine';
-import { UIUtils } from './utils/ui';
+import { MenuScene } from './scenes/menuScene';
 
 // main game configuration
 const config: GameConfig = {
   scene: {
     'game': GameScene, 
+    'menu': MenuScene
   },
   backgroundColor: "rgba(0,0,0,0)",
   parent: 'game'
@@ -25,12 +26,14 @@ export class Game  {
   constructor(private config: GameConfig) {
       this.target = <HTMLCanvasElement>document.getElementById(config.parent);
       this.ctx = this.target.getContext('2d');
+      this.target.width = window.innerWidth;
+      this.target.height = window.innerHeight;
       this.target.style.backgroundColor = config.backgroundColor;
       const parent = document.getElementById(config.parent);
       if (!parent) throw new Error("Parent not found");
 
       this.sm = new StateMachine(this, config.scene);
-      this.sm.changeScene('game');
+      this.sm.changeScene('menu');
       this.se = new SoundEngine();
   }
 
@@ -52,9 +55,7 @@ export class Game  {
 window.onload = () => {
   const game = new Game(config);
   game.se.load().then(success => {
-    const ui = new UIUtils(game);
-    ui.setup();
-    //game.run();
+    game.run();
   });
   window.addEventListener('keydown', ev => {
     game.handleKeyboardEvent(ev);
