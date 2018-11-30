@@ -13,29 +13,52 @@ import { Score } from '../objects/score';
  */
 export class GameScene extends Scene {
 
+  private currentGameMode: string = '';
+  private remainings: number = 0;
   private messenger: Messenger;
   private letter: Letter;
   private timer: Timer;
   private score: Score;
+  private readonly gameModeSetup = {
+      'clock' : (data) => {
+        const guessTime = data * 1000;
+        this.remainings = 20;
+        this.timer = this.add(Timer, this.game.target.width - 10, this.game.target.height,  10, this.game.target.height, guessTime);
+        this.timer.onFinish(() => {
+          this.letter.showLetter();
+          this.remainings--;
+          if(this.remainings === 0) this.endGame()
+        });
+      },
+      'precision' : (difficulty) => {
+        const guessTime = (5 - difficulty) * 2000;
+        this.timer = this.add(Timer, this.game.target.width - 10, this.game.target.height, 10, this.game.target.height, guessTime);
+        this.timer.onFinish(() => {
+          this.switchLetter();
+        });
+      },
+       'infinite' : (_) => {
+        // nothing to do ?
+       }
+  };
 
   constructor(game: Game) {
     super(game);
     this.messenger = this.add(Messenger, game.target.width / 2, 350);
     this.letter =  this.add(Letter, game.target.width / 2, 50);
+    this.score = this.add(Score, 5, this.game.target.height - 5);
   }
 
   init(...params: any[]){
-    this.score = this.add(Score, 5, this.game.target.height - 5);
-    const guessTime = params[0] || 10_000;
-    if(guessTime != Infinity){
-      this.timer = this.add(Timer, this.game.target.width - 10, this.game.target.height,  10, this.game.target.height, guessTime);
-      this.timer.onFinish(() => {
-        this.timerEnd();
-      });
-    } else {
-      this.timer =  this.add(Timer, 0,0,0,0,0);// 'Empty' timer
-    }
+    const data = params[0];
+    const mode = params[1];
+    this.gameModeSetup[mode](data);
+    this.currentGameMode = mode;
     this.switchLetter();
+  }
+
+  endGame(){
+    //Some animation and stuff ...
   }
 
   timerEnd(){

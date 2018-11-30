@@ -10,6 +10,11 @@ export class MenuScene extends Scene {
 
     private panels: HTMLElement[] = [];
     private btns: HTMLButtonElement[] = [];
+    private readonly gameModes = {
+        'clock' : 'data-time',
+        'precision': 'data-difficulty',
+        'infinity' : 'data-infinity'
+    };
 
     constructor(game: Game){
         super(game);
@@ -61,6 +66,17 @@ export class MenuScene extends Scene {
         this.show(panel);
     }
 
+    /**
+     * Closes all the menu panels
+     */
+    private cleanup(){
+        this.panels.map(x => this.hide(x));
+        this.panels = [];
+        this.btns.map(x => this.deselect(x));
+        this.btns = [];
+        this.hide(id('menu'));
+    }
+
     setup(){
         const buttons = Array.from(document.getElementsByTagName('button'));
         buttons.filter(x => x.hasAttribute('data-target')).map(x => {
@@ -69,15 +85,14 @@ export class MenuScene extends Scene {
                 this.togglePannel(id(target), x);
             });
         });
-        buttons.filter(x => x.hasAttribute('data-time')).map(x => {
-            const time = +x.getAttribute('data-time');
-            x.addEventListener('click', () => {
-                this.panels.map(x => this.hide(x));
-                this.panels = [];
-                this.btns.map(x => this.deselect(x));
-                this.btns = [];
-                document.getElementById('menu').classList.add('hiding');
-                this.game.sm.changeScene('game');
+        Object.keys(this.gameModes).map(k => {
+            const dataName = this.gameModes[k];
+            buttons.filter(x => x.hasAttribute(dataName)).map(x => {
+                const data = +x.getAttribute(dataName);
+                x.addEventListener('click', () => {
+                    this.cleanup();
+                    this.game.sm.changeScene('game', data, k);
+                });
             });
         });
     }
