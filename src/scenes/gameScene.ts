@@ -22,36 +22,44 @@ export class GameScene extends Scene {
   private readonly gameModeSetup = {
       'clock' : (data) => {
         const guessTime = data * 1000;
-        this.remainings = 20;
         this.timer = this.add(Timer, this.game.target.width - 10, this.game.target.height,  10, this.game.target.height, guessTime);
         this.timer.onFinish(() => {
-          this.letter.showLetter();
-          this.remainings--;
-          if(this.remainings === 0) this.endGame()
+          this.endGame();
         });
+        this.timer.start();
       },
       'precision' : (difficulty) => {
         const guessTime = (5 - difficulty) * 2000;
+        this.remainings = 5;
         this.timer = this.add(Timer, this.game.target.width - 10, this.game.target.height, 10, this.game.target.height, guessTime);
         this.timer.onFinish(() => {
-          this.switchLetter();
+          this.letter.showLetter();
         });
+        this.timer.start();
       },
-       'infinite' : (_) => {
-        // nothing to do ?
+       'infinity' : (_) => {
+        
        }
   };
 
   constructor(game: Game) {
     super(game);
-    this.messenger = this.add(Messenger, game.target.width / 2, 350);
+    this.messenger = this.add(Messenger, game.target.width / 2, game.target.height / 2);
     this.letter =  this.add(Letter, game.target.width / 2, 50);
     this.score = this.add(Score, 5, this.game.target.height - 5);
+    this.setup();
+  }
+
+  private setup(){
+    document.getElementById('menu-btn').addEventListener('click', () => {
+      document.getElementById('game-menu').classList.add('hiding');
+      document.getElementById('menu').classList.remove('hiding');
+      this.game.sm.changeScene('menu');
+    }); 
   }
 
   init(...params: any[]){
-    const data = params[0];
-    const mode = params[1];
+    const [data, mode, ..._] = params;
     this.gameModeSetup[mode](data);
     this.currentGameMode = mode;
     this.switchLetter();
@@ -59,6 +67,7 @@ export class GameScene extends Scene {
 
   endGame(){
     //Some animation and stuff ...
+    alert('End game');
   }
 
   timerEnd(){
@@ -81,11 +90,17 @@ export class GameScene extends Scene {
    * guessed the correct letter
    */
   private switchLetter(){
-    this.timer.start();
+    if(this.currentGameMode === 'precision'){
+      this.remainings--;
+      if(this.remainings === 0) return this.endGame();
+      this.timer.start();
+    }
     this.letter.hideLetter();
-    let currentLetter = randomLetter();
-    while(this.letter.is(currentLetter)) currentLetter = randomLetter();
-    this.messenger.displayLetter(this.letter.currentLetter = currentLetter);
+    let nwLetter;
+    do{
+      nwLetter = randomLetter();
+    }while(this.letter.is(nwLetter));
+    this.messenger.displayLetter(this.letter.currentLetter = nwLetter);
   }
 
   /**

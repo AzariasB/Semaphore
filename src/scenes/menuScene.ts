@@ -75,9 +75,10 @@ export class MenuScene extends Scene {
         this.btns.map(x => this.deselect(x));
         this.btns = [];
         this.hide(id('menu'));
+        this.show(id('game-menu'));
     }
 
-    setup(){
+    setup(){        
         const buttons = Array.from(document.getElementsByTagName('button'));
         buttons.filter(x => x.hasAttribute('data-target')).map(x => {
             const target = x.getAttribute('data-target');

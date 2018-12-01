@@ -13,6 +13,23 @@
     <div class="container" >
       <!-- <h1>Semaphore</h1> -->
       <canvas id="game" ></canvas>
+      <div id="game-menu" class="pannel pannel-1 hiding">
+        <div class="menu">
+          <h2>Jeu</h2>
+          <ul class="btn-list" >
+            <li><button class="cta" id="menu-btn" >
+              <ul>
+                <li class="ar-one" ><</li>
+                <li class="ar-two"><</li>
+                <li class="ar-three"><</li>
+              </ul>
+              <span>
+                  Menu
+              </span>
+            </button></li>
+          </ul>
+        </div>
+      </div>
       <div id="menu" class="pannel pannel-1" >
         <div class="menu">
             <h2>Menu</h2>
@@ -28,7 +45,7 @@
           <div class="menu">
               <h2>Choix du type de jeu</h2>
               <ul class="btn-list" >
-                  <li><button>Infini</button></li>
+                  <li><button data-infinity="1" >Infini</button></li>
                   <li><button data-target="clockChoice" >Contre la montre</button></li>
                   <li><button data-target="precisionChoice" >Précision</button></li>
                 </ul>

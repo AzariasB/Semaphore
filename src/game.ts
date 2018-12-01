@@ -26,7 +26,7 @@ export class Game  {
   constructor(private config: GameConfig) {
       this.target = <HTMLCanvasElement>document.getElementById(config.parent);
       this.ctx = this.target.getContext('2d');
-      this.target.width = window.innerWidth;
+      this.target.width = window.innerWidth * 0.6;
       this.target.height = window.innerHeight;
       this.target.style.backgroundColor = config.backgroundColor;
       const parent = document.getElementById(config.parent);
